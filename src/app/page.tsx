@@ -76,6 +76,8 @@ export default function HomePage() {
 
   const categories: BasketCategory[] = [
     'All',
+    'Value & Cashflow Fortress',
+    'Energy & Real Commodities',
     'MegaCap Titans',
     'AI & Silicon Compute',
     'Fintech & Bitcoin Rails',

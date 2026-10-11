@@ -2,12 +2,13 @@ export type RiskTier = 'Low' | 'Moderate' | 'High' | 'Aggressive';
 
 export type BasketCategory =
   | 'All'
-  | 'AI & Silicon Compute'
-  | 'Private & Pre-IPO Tech'
   | 'MegaCap Titans'
+  | 'AI & Silicon Compute'
   | 'Fintech & Bitcoin Rails'
+  | 'Private & Pre-IPO Tech'
   | 'Market Index ETFs'
-  | 'Sovereign Commodities';
+  | 'Value & Cashflow Fortress'
+  | 'Energy & Real Commodities';
 
 export type StockProvider =
   | 'xStocks Ecosystem'

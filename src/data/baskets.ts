@@ -62,12 +62,13 @@ const orbitalConstituents: BasketConstituent[] = [
   makeConstituent('CRCLX', 20),
 ];
 
-// Basket 5: Macro Sovereign & Index Anchor
+// Basket 5: Macro Sovereign & Index Anchor (Includes Berkshire BRK.BX)
 const macroIndexConstituents: BasketConstituent[] = [
-  makeConstituent('SPYX', 35),
-  makeConstituent('QQQX', 30),
-  makeConstituent('GLDX', 25),
-  makeConstituent('TQQQX', 10),
+  makeConstituent('SPYX', 30),   // S&P 500 Index
+  makeConstituent('BRK.BX', 25), // Berkshire Hathaway Conglomerate
+  makeConstituent('QQQX', 20),   // Nasdaq 100 Index
+  makeConstituent('GLDX', 15),   // Physical Gold
+  makeConstituent('TQQQX', 10),  // 3x Leveraged Nasdaq
 ];
 
 // Basket 6: Memory & Semiconductor Momentum
@@ -78,7 +79,114 @@ const semiMomentumConstituents: BasketConstituent[] = [
   makeConstituent('INTCX', 20), // Intel xStock
 ];
 
+// Basket 7: Consumer Monopolies & Daily Essentials (MCD, KO, PEP, PG, WMT, JNJ)
+const valueCashflowConstituents: BasketConstituent[] = [
+  makeConstituent('MCDX', 20), // McDonald's xStock
+  makeConstituent('KOX', 20),  // Coca-Cola xStock
+  makeConstituent('PEPX', 20), // PepsiCo xStock
+  makeConstituent('PGX', 15),  // Procter & Gamble xStock
+  makeConstituent('WMTX', 15), // Walmart xStock
+  makeConstituent('JNJX', 10), // Johnson & Johnson xStock
+];
+
+// Basket 8: Energy Sovereignty & Real Commodities (CVXX, XOMX, GLDX, SLVX, URAX)
+const energyCommoditiesConstituents: BasketConstituent[] = [
+  makeConstituent('CVXX', 30),  // Chevron xStock
+  makeConstituent('XOMX', 25),  // Exxon Mobil xStock
+  makeConstituent('GLDX', 20),  // Physical Gold xStock
+  makeConstituent('SLVX', 15),  // iShares Silver Trust xStock
+  makeConstituent('URAX', 10),  // Global X Uranium ETF xStock
+];
+
 export const STOCK_BASKETS: Basket[] = [
+  {
+    id: 'consumer-monopolies-essentials',
+    slug: 'consumer-monopolies-essentials',
+    title: 'Consumer Monopolies & Daily Essentials',
+    tagline: 'Recession-proof daily staples, global brand pricing power, and compounding dividend aristocrats.',
+    description:
+      'Featuring McDonald’s (MCDX), Coca-Cola (KOX), PepsiCo (PEPX), Procter & Gamble (PGX), Walmart (WMTX), and Johnson & Johnson (JNJX). Built for unshakeable brand pricing power, essential household demand, and compounding dividend returns.',
+    category: 'Value & Cashflow Fortress',
+    riskTier: 'Low',
+    minInvestmentUsdc: 25,
+    nav: calculateBasketNav(valueCashflowConstituents),
+    returns: {
+      d1: calculateBasket24h(valueCashflowConstituents),
+      w1: 1.9,
+      m1: 5.2,
+      y1: 31.8,
+      allTime: 72.0,
+    },
+    rebalanceFrequency: 'Quarterly',
+    lastRebalanced: 'Oct 01, 2026',
+    curator: {
+      name: 'Omaha Quantitative Wealth',
+      handle: '@omaha_value',
+      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&auto=format&fit=crop&q=80',
+      reputationScore: 99.7,
+      followers: 28400,
+      feePercent: 0.10,
+      verified: true,
+    },
+    constituents: valueCashflowConstituents,
+    historicalChart: [
+      { date: 'Nov 23', nav: 240, sp500: 100, sol: 100 },
+      { date: 'Jan 24', nav: 252, sp500: 105, sol: 138 },
+      { date: 'Mar 24', nav: 268, sp500: 111, sol: 210 },
+      { date: 'May 24', nav: 278, sp500: 116, sol: 185 },
+      { date: 'Jul 24', nav: 288, sp500: 121, sol: 195 },
+      { date: 'Sep 24', nav: 298, sp500: 124, sol: 175 },
+      { date: 'Nov 24', nav: 308, sp500: 128, sol: 220 },
+      { date: 'Jan 25', nav: 318, sp500: 132, sol: 245 },
+    ],
+    tags: ['McDonalds MCD', 'PepsiCo PEP', 'Coca-Cola KO', 'Procter & Gamble PG', 'Walmart WMT', 'Johnson & Johnson JNJ'],
+    solanaMintPreview: 'StkConsumerMoat0039xYyZ91',
+    isFeatured: true,
+  },
+  {
+    id: 'energy-sovereign-commodities',
+    slug: 'energy-sovereign-commodities',
+    title: 'Energy Sovereignty & Real Commodities',
+    tagline: 'Sovereign oil supermajors, clean nuclear fuel, and physical monetary metals.',
+    description:
+      'A tangible asset fortress combining Chevron (CVXX), Exxon Mobil (XOMX), Physical Gold (GLDX), Silver (SLVX), and Uranium (URAX). Designed as an unshakeable hedge against fiat inflation and global supply chain shocks.',
+    category: 'Energy & Real Commodities',
+    riskTier: 'Moderate',
+    minInvestmentUsdc: 30,
+    nav: calculateBasketNav(energyCommoditiesConstituents),
+    returns: {
+      d1: calculateBasket24h(energyCommoditiesConstituents),
+      w1: 2.4,
+      m1: 7.1,
+      y1: 38.6,
+      allTime: 84.0,
+    },
+    rebalanceFrequency: 'Quarterly',
+    lastRebalanced: 'Oct 01, 2026',
+    curator: {
+      name: 'Commodity Macro Fund',
+      handle: '@macro_real',
+      avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=120&auto=format&fit=crop&q=80',
+      reputationScore: 98.9,
+      followers: 16200,
+      feePercent: 0.20,
+      verified: true,
+    },
+    constituents: energyCommoditiesConstituents,
+    historicalChart: [
+      { date: 'Nov 23', nav: 190, sp500: 100, sol: 100 },
+      { date: 'Jan 24', nav: 205, sp500: 105, sol: 138 },
+      { date: 'Mar 24', nav: 220, sp500: 111, sol: 210 },
+      { date: 'May 24', nav: 235, sp500: 116, sol: 185 },
+      { date: 'Jul 24', nav: 245, sp500: 121, sol: 195 },
+      { date: 'Sep 24', nav: 252, sp500: 124, sol: 175 },
+      { date: 'Nov 24', nav: 260, sp500: 128, sol: 220 },
+      { date: 'Jan 25', nav: 268, sp500: 132, sol: 245 },
+    ],
+    tags: ['Chevron CVX', 'Exxon XOM', 'Gold GLD', 'Silver SLV', 'Uranium URA', 'Real Assets'],
+    solanaMintPreview: 'StkEnergyRealAssets0918X',
+    isFeatured: false,
+  },
   {
     id: 'mag7-titans-xstock',
     slug: 'mag7-titans-xstock',
