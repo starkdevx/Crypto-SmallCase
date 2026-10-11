@@ -37,13 +37,15 @@ const mag7Constituents: BasketConstituent[] = [
   makeConstituent('TSLAX', 8),
 ];
 
-// Basket 2: Autonomous AI & Silicon Grid
+// Basket 2: Frontier AI & Semiconductor Monopolies
 const aiSiliconConstituents: BasketConstituent[] = [
-  makeConstituent('NVDAX', 35),
-  makeConstituent('TSMX', 25),
+  makeConstituent('NVDAX', 20),
+  makeConstituent('TSMX', 20),
+  makeConstituent('ASMLX', 15),
   makeConstituent('AVGOX', 15),
-  makeConstituent('AMDX', 15),
-  makeConstituent('ORCLX', 10),
+  makeConstituent('AMDX', 10),
+  makeConstituent('MRVLX', 10),
+  makeConstituent('INTCX', 10),
 ];
 
 // Basket 3: Fintech & Bitcoin Rails
@@ -55,12 +57,6 @@ const bitcoinFintechConstituents: BasketConstituent[] = [
   makeConstituent('STRCX', 10),
 ];
 
-// Basket 4: Orbital Space & Hard Tech
-const orbitalConstituents: BasketConstituent[] = [
-  makeConstituent('SPCXX', 45), // SpaceX xStock!
-  makeConstituent('TSLAX', 35),
-  makeConstituent('CRCLX', 20),
-];
 
 // Basket 5: Macro Sovereign & Index Anchor (Includes Berkshire BRK.BX)
 const macroIndexConstituents: BasketConstituent[] = [
@@ -71,13 +67,6 @@ const macroIndexConstituents: BasketConstituent[] = [
   makeConstituent('TQQQX', 10),  // 3x Leveraged Nasdaq
 ];
 
-// Basket 6: Memory & Semiconductor Momentum
-const semiMomentumConstituents: BasketConstituent[] = [
-  makeConstituent('SNDKX', 30), // Sandisk xStock
-  makeConstituent('SKHYX', 25), // SK Hynix xStock
-  makeConstituent('MRVLX', 25), // Marvell xStock
-  makeConstituent('INTCX', 20), // Intel xStock
-];
 
 // Basket 7: Consumer Monopolies & Daily Essentials (MCD, KO, PEP, PG, WMT, JNJ)
 const valueCashflowConstituents: BasketConstituent[] = [
@@ -96,6 +85,27 @@ const energyCommoditiesConstituents: BasketConstituent[] = [
   makeConstituent('GLDX', 20),  // Physical Gold xStock
   makeConstituent('SLVX', 15),  // iShares Silver Trust xStock
   makeConstituent('URAX', 10),  // Global X Uranium ETF xStock
+];
+
+// Basket: Human Health & Life-Saving Medicines (NVOX, PFEX, AZNX, MRKX, ABBVX, MRNAX, UNHX)
+const healthMedicinesConstituents: BasketConstituent[] = [
+  makeConstituent('NVOX', 20),  // Novo Nordisk xStock (Diabetes & Ozempic/Wegovy)
+  makeConstituent('PFEX', 15),  // Pfizer xStock (Vaccines & everyday pharmaceuticals)
+  makeConstituent('AZNX', 15),  // AstraZeneca xStock (Cardiovascular & oncology treatments)
+  makeConstituent('MRKX', 15),  // Merck xStock (Cancer immunotherapy & essential drugs)
+  makeConstituent('ABBVX', 15), // AbbVie xStock (Immunology & arthritis medicines)
+  makeConstituent('MRNAX', 10), // Moderna xStock (mRNA vaccines & preventive medicine)
+  makeConstituent('UNHX', 10),  // UnitedHealth xStock (Healthcare services & medical access)
+];
+
+// Basket: Global Financial Hegemons & Card Rails (JPMX, VX, MAX, GSX, BACX, PYPLX)
+const globalBankingConstituents: BasketConstituent[] = [
+  makeConstituent('JPMX', 25),  // JPMorgan Chase xStock
+  makeConstituent('VX', 20),    // Visa xStock
+  makeConstituent('MAX', 20),   // Mastercard xStock
+  makeConstituent('GSX', 15),   // Goldman Sachs xStock
+  makeConstituent('BACX', 10),  // Bank of America xStock
+  makeConstituent('PYPLX', 10), // PayPal xStock
 ];
 
 export const STOCK_BASKETS: Basket[] = [
@@ -234,10 +244,10 @@ export const STOCK_BASKETS: Basket[] = [
   {
     id: 'ai-silicon-grid',
     slug: 'ai-silicon-grid',
-    title: 'Autonomous AI & Silicon Grid',
-    tagline: 'High-conviction tokenized semiconductors powering frontier AI training & inference compute.',
+    title: 'Frontier AI & Semiconductor Monopolies',
+    tagline: 'The unassailable global monopolies powering artificial intelligence — from ASML EUV lithography to Nvidia GPUs and TSMC foundries.',
     description:
-      'Concentrated allocation in the global silicon supply chain: Nvidia, TSMC, Broadcom, AMD, and Oracle. Backed by real-time xStock token contracts and global datacenter capex demand.',
+      'The definitive full-stack AI hardware fortress. Combines the world’s most critical semiconductor monopolies and designers: ASML (100% EUV lithography monopoly), TSMC (leading-edge foundries), NVIDIA (GPU compute & CUDA moat), Broadcom (custom AI ASICs), AMD (accelerators), Marvell (custom silicon & electro-optics), and Intel (silicon fabrication).',
     category: 'AI & Silicon Compute',
     riskTier: 'High',
     minInvestmentUsdc: 50,
@@ -266,12 +276,12 @@ export const STOCK_BASKETS: Basket[] = [
       { date: 'Jan 24', nav: 225, sp500: 105, sol: 138 },
       { date: 'Mar 24', nav: 275, sp500: 111, sol: 210 },
       { date: 'May 24', nav: 310, sp500: 116, sol: 185 },
-      { date: 'Jul 24', nav: 360, sp500: 121, sol: 195 },
+      { date: 'Jul 24', nav: 360, sol: 195, sp500: 121 },
       { date: 'Sep 24', nav: 395, sp500: 124, sol: 175 },
       { date: 'Nov 24', nav: 430, sp500: 128, sol: 220 },
       { date: 'Jan 25', nav: 468, sp500: 132, sol: 245 },
     ],
-    tags: ['Nvidia xStock', 'TSMC Foundry', 'High Alpha', 'Hypergrowth'],
+    tags: ['ASML Lithography', 'NVIDIA GPU', 'TSMC Foundry', 'Broadcom ASIC', 'Marvell MRVL', 'Intel INTC'],
     solanaMintPreview: 'StkAIComputeGrid4L8x9Gq2Qz',
     isFeatured: true,
   },
@@ -320,50 +330,6 @@ export const STOCK_BASKETS: Basket[] = [
     isFeatured: true,
   },
   {
-    id: 'orbital-space-hard-tech',
-    slug: 'orbital-space-hard-tech',
-    title: 'Orbital Space & Pre-IPO Hard Tech',
-    tagline: 'Private space flight dominance and orbital internet constellations on Solana.',
-    description:
-      'Anchored by SpaceX xStock (SPCXx), Tesla xStock (TSLAx), and Circle xStock (CRCLx). Combines launch vehicle cadence, Starlink subscriber expansion, and automated robotics.',
-    category: 'Private & Pre-IPO Tech',
-    riskTier: 'Aggressive',
-    minInvestmentUsdc: 75,
-    nav: calculateBasketNav(orbitalConstituents),
-    returns: {
-      d1: calculateBasket24h(orbitalConstituents),
-      w1: 4.8,
-      m1: 14.1,
-      y1: 86.4,
-      allTime: 165.0,
-    },
-    rebalanceFrequency: 'Quarterly',
-    lastRebalanced: 'Sep 20, 2026',
-    curator: {
-      name: 'Stratosphere Analytics',
-      handle: '@strato_cap',
-      avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=120&auto=format&fit=crop&q=80',
-      reputationScore: 98.6,
-      followers: 11500,
-      feePercent: 0.30,
-      verified: true,
-    },
-    constituents: orbitalConstituents,
-    historicalChart: [
-      { date: 'Nov 23', nav: 130, sp500: 100, sol: 100 },
-      { date: 'Jan 24', nav: 155, sp500: 105, sol: 138 },
-      { date: 'Mar 24', nav: 180, sp500: 111, sol: 210 },
-      { date: 'May 24', nav: 205, sp500: 116, sol: 185 },
-      { date: 'Jul 24', nav: 220, sp500: 121, sol: 195 },
-      { date: 'Sep 24', nav: 235, sp500: 124, sol: 175 },
-      { date: 'Nov 24', nav: 248, sp500: 128, sol: 220 },
-      { date: 'Jan 25', nav: 260, sp500: 132, sol: 245 },
-    ],
-    tags: ['SpaceX SPCXx', 'Starlink', 'Tesla TSLAx', 'Private Equity'],
-    solanaMintPreview: 'StkSpaceHardTechQ5509Lop',
-    isFeatured: false,
-  },
-  {
     id: 'macro-sovereign-anchor',
     slug: 'macro-sovereign-anchor',
     title: 'Macro Sovereign & Index Anchor',
@@ -408,47 +374,91 @@ export const STOCK_BASKETS: Basket[] = [
     isFeatured: false,
   },
   {
-    id: 'memory-silicon-momentum',
-    slug: 'memory-silicon-momentum',
-    title: 'High-Beta Semiconductor Momentum',
-    tagline: 'High-volatility tokenized semiconductor leaders in memory storage and custom ASICs.',
+    id: 'health-and-medicines',
+    slug: 'health-and-medicines',
+    title: 'Human Health & Life-Saving Medicines',
+    tagline: 'The world’s essential pharmaceutical giants making daily medicines, vaccines, and treatments for human health.',
     description:
-      'High-beta momentum basket capturing flash storage, high-bandwidth memory (HBM3e), and custom silicon packaging via Sandisk (SNDKX), SK Hynix (SKHYX), Marvell (MRVLX), and Intel (INTCX).',
-    category: 'AI & Silicon Compute',
-    riskTier: 'High',
-    minInvestmentUsdc: 35,
-    nav: calculateBasketNav(semiMomentumConstituents),
+      'A simple, human-focused healthcare basket. Features the world’s most trusted pharmaceutical giants making everyday medicines, vaccines, and hospital care: Novo Nordisk (NVOX), Pfizer (PFEX), AstraZeneca (AZNX), Merck (MRKX), AbbVie (ABBVX), Moderna (MRNAX), and UnitedHealth (UNHX).',
+    category: 'Healthcare & Essential Medicines',
+    riskTier: 'Low',
+    minInvestmentUsdc: 25,
+    nav: calculateBasketNav(healthMedicinesConstituents),
     returns: {
-      d1: calculateBasket24h(semiMomentumConstituents),
-      w1: 5.4,
-      m1: 12.8,
-      y1: 94.2,
-      allTime: 180.0,
+      d1: calculateBasket24h(healthMedicinesConstituents),
+      w1: 2.1,
+      m1: 6.4,
+      y1: 36.5,
+      allTime: 88.0,
     },
-    rebalanceFrequency: 'Monthly',
-    lastRebalanced: 'Oct 02, 2026',
+    rebalanceFrequency: 'Quarterly',
+    lastRebalanced: 'Oct 01, 2026',
     curator: {
-      name: 'VentureDAO Solana',
-      handle: '@venture_sol',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80',
-      reputationScore: 98.3,
-      followers: 14700,
-      feePercent: 0.25,
+      name: 'Global Health Alliance',
+      handle: '@global_health',
+      avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=120&auto=format&fit=crop&q=80',
+      reputationScore: 99.4,
+      followers: 18200,
+      feePercent: 0.10,
       verified: true,
     },
-    constituents: semiMomentumConstituents,
+    constituents: healthMedicinesConstituents,
     historicalChart: [
-      { date: 'Nov 23', nav: 210, sp500: 100, sol: 100 },
-      { date: 'Jan 24', nav: 260, sp500: 105, sol: 138 },
+      { date: 'Nov 23', nav: 260, sp500: 100, sol: 100 },
+      { date: 'Jan 24', nav: 285, sp500: 105, sol: 138 },
       { date: 'Mar 24', nav: 310, sp500: 111, sol: 210 },
-      { date: 'May 24', nav: 340, sp500: 116, sol: 185 },
-      { date: 'Jul 24', nav: 390, sp500: 121, sol: 195 },
-      { date: 'Sep 24', nav: 410, sp500: 124, sol: 175 },
-      { date: 'Nov 24', nav: 450, sp500: 128, sol: 220 },
-      { date: 'Jan 25', nav: 485, sp500: 132, sol: 245 },
+      { date: 'May 24', nav: 330, sp500: 116, sol: 185 },
+      { date: 'Jul 24', nav: 350, sp500: 121, sol: 195 },
+      { date: 'Sep 24', nav: 365, sp500: 124, sol: 175 },
+      { date: 'Nov 24', nav: 380, sp500: 128, sol: 220 },
+      { date: 'Jan 25', nav: 395, sp500: 132, sol: 245 },
     ],
-    tags: ['Sandisk SNDKX', 'SK Hynix', 'Marvell MRVLX', 'Semiconductor Momentum'],
-    solanaMintPreview: 'StkMemoryMomentum9019Xy',
-    isFeatured: false,
+    tags: ['Novo Nordisk NVO', 'Pfizer PFE', 'AstraZeneca AZN', 'Merck MRK', 'AbbVie ABBV', 'Moderna MRNA', 'UnitedHealth UNH'],
+    solanaMintPreview: 'StkHealthMedicine0031Xz',
+    isFeatured: true,
+  },
+  {
+    id: 'global-financial-hegemons-cards',
+    slug: 'global-financial-hegemons-cards',
+    title: 'Global Financial Hegemons & Card Rails',
+    tagline: 'The world’s dominant banking oligarchs, global card duopoly networks, and digital checkout rails.',
+    description:
+      'Anchored by America’s premier banking dynasties and global payments networks. Featuring JPMorgan Chase (JPMX), Visa (VX), Mastercard (MAX), Goldman Sachs (GSX), Bank of America (BACX), and PayPal (PYPLX) capturing transaction fees on trillions of dollars in global commerce.',
+    category: 'Global Banking & Card Rails',
+    riskTier: 'Low',
+    minInvestmentUsdc: 25,
+    nav: calculateBasketNav(globalBankingConstituents),
+    returns: {
+      d1: calculateBasket24h(globalBankingConstituents),
+      w1: 1.8,
+      m1: 5.5,
+      y1: 33.2,
+      allTime: 79.5,
+    },
+    rebalanceFrequency: 'Quarterly',
+    lastRebalanced: 'Oct 01, 2026',
+    curator: {
+      name: 'Manhattan Institutional Macro',
+      handle: '@manhattan_macro',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80',
+      reputationScore: 99.6,
+      followers: 22100,
+      feePercent: 0.10,
+      verified: true,
+    },
+    constituents: globalBankingConstituents,
+    historicalChart: [
+      { date: 'Nov 23', nav: 250, sp500: 100, sol: 100 },
+      { date: 'Jan 24', nav: 275, sp500: 105, sol: 138 },
+      { date: 'Mar 24', nav: 300, sp500: 111, sol: 210 },
+      { date: 'May 24', nav: 320, sp500: 116, sol: 185 },
+      { date: 'Jul 24', nav: 340, sp500: 121, sol: 195 },
+      { date: 'Sep 24', nav: 355, sp500: 124, sol: 175 },
+      { date: 'Nov 24', nav: 375, sp500: 128, sol: 220 },
+      { date: 'Jan 25', nav: 390, sp500: 132, sol: 245 },
+    ],
+    tags: ['JPMorgan JPM', 'Visa V', 'Mastercard MA', 'Goldman Sachs GS', 'Bank of America BAC', 'PayPal PYPL'],
+    solanaMintPreview: 'StkFinanceHegemon0071Zy',
+    isFeatured: true,
   },
 ];

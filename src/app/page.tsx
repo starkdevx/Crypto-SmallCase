@@ -77,11 +77,12 @@ export default function HomePage() {
   const categories: BasketCategory[] = [
     'All',
     'Value & Cashflow Fortress',
+    'Healthcare & Essential Medicines',
+    'Global Banking & Card Rails',
     'Energy & Real Commodities',
     'MegaCap Titans',
     'AI & Silicon Compute',
     'Fintech & Bitcoin Rails',
-    'Private & Pre-IPO Tech',
     'Market Index ETFs',
   ];
 

@@ -4,6 +4,8 @@ export type BasketCategory =
   | 'All'
   | 'MegaCap Titans'
   | 'AI & Silicon Compute'
+  | 'Healthcare & Essential Medicines'
+  | 'Global Banking & Card Rails'
   | 'Fintech & Bitcoin Rails'
   | 'Private & Pre-IPO Tech'
   | 'Market Index ETFs'

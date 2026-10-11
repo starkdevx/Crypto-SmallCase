@@ -232,19 +232,20 @@ export function BasketCard({
             ))}
           </div>
 
-          {/* Constituent Token Badges with Real CoinGecko Images */}
+          {/* Constituent Token Badges with Real CoinGecko Images - Showing Every Stock Clearly */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '10px' }}>
-            {basket.constituents.slice(0, 5).map((item) => (
+            {basket.constituents.map((item) => (
               <span
                 key={item.stock.ticker}
+                title={`${item.stock.name} (${item.weight}%)`}
                 style={{
-                  fontSize: '0.7rem',
+                  fontSize: '0.72rem',
                   fontWeight: 600,
-                  color: '#e2e8f0',
+                  color: '#f1f5f9',
                   background: 'rgba(255, 255, 255, 0.05)',
                   padding: '3px 8px',
                   borderRadius: '6px',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  border: '1px solid rgba(255, 255, 255, 0.09)',
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '5px',
@@ -258,14 +259,11 @@ export function BasketCard({
                   />
                 )}
                 <span>{item.stock.ticker}</span>
-                <span style={{ color: 'var(--text-muted)' }}>{item.weight}%</span>
+                <span style={{ color: 'var(--text-muted)', fontSize: '0.68rem', fontWeight: 500 }}>
+                  {item.weight}%
+                </span>
               </span>
             ))}
-            {basket.constituents.length > 5 && (
-              <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', alignSelf: 'center' }}>
-                +{basket.constituents.length - 5} more
-              </span>
-            )}
           </div>
         </div>
       </div>
