@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Basket, Timeframe } from '../types/basket';
-import { ArrowUpRight, ArrowDownRight, Layers, Shield, Sparkles, Check, Plus } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, Layers, Check, Plus } from 'lucide-react';
 
 interface BasketCardProps {
   basket: Basket;
@@ -94,7 +94,7 @@ export function BasketCard({
           color: '#ffffff',
           letterSpacing: '0.05em',
         }}>
-          POPULAR BASKET
+          FEATURED xSTOCK
         </div>
       )}
 
@@ -123,7 +123,7 @@ export function BasketCard({
             color: riskStyle.color,
             border: `1px solid ${riskStyle.border}`,
           }}>
-            {basket.riskTier} Risk
+            {basket.riskTier} Volatility
           </span>
         </div>
 
@@ -179,7 +179,7 @@ export function BasketCard({
               style={{ fontSize: '0.92rem', padding: '4px 10px', marginTop: '2px' }}
             >
               {isPositive ? <ArrowUpRight size={15} /> : <ArrowDownRight size={15} />}
-              {isPositive ? '+' : ''}{currentReturn.toFixed(1)}%
+              {isPositive ? '+' : ''}{currentReturn.toFixed(2)}%
             </div>
           </div>
         </div>
@@ -194,12 +194,6 @@ export function BasketCard({
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
             style={{ width: '100%', height: '46px', overflow: 'visible' }}
           >
-            <defs>
-              <linearGradient id={`grad-${basket.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor={isPositive ? 'var(--solana-green)' : 'var(--loss)'} stopOpacity="0.3" />
-                <stop offset="100%" stopColor={isPositive ? 'var(--solana-green)' : 'var(--loss)'} stopOpacity="0.0" />
-              </linearGradient>
-            </defs>
             <polyline
               fill="none"
               stroke={isPositive ? 'var(--solana-green)' : 'var(--loss)'}
@@ -214,7 +208,7 @@ export function BasketCard({
         {/* Constituent Allocation Bar */}
         <div style={{ marginBottom: '16px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-secondary)', marginBottom: '6px' }}>
-            <span>Holdings Breakdown ({basket.constituents.length} stocks)</span>
+            <span>Holdings Breakdown ({basket.constituents.length} tokenized xStocks)</span>
             <span style={{ color: 'var(--text-muted)' }}>Min ${basket.minInvestmentUsdc}</span>
           </div>
           {/* Stacked Bar */}
@@ -229,7 +223,7 @@ export function BasketCard({
             {basket.constituents.map((item, idx) => (
               <div
                 key={item.stock.ticker}
-                title={`${item.stock.ticker}: ${item.weight}%`}
+                title={`${item.stock.name} (${item.stock.ticker}): ${item.weight}%`}
                 style={{
                   width: `${item.weight}%`,
                   backgroundColor: segmentColors[idx % segmentColors.length],
@@ -237,27 +231,39 @@ export function BasketCard({
               />
             ))}
           </div>
-          {/* Ticker Badges list */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '8px' }}>
-            {basket.constituents.slice(0, 4).map((item, idx) => (
+
+          {/* Constituent Token Badges with Real CoinGecko Images */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '10px' }}>
+            {basket.constituents.slice(0, 5).map((item) => (
               <span
                 key={item.stock.ticker}
                 style={{
-                  fontSize: '0.68rem',
+                  fontSize: '0.7rem',
                   fontWeight: 600,
                   color: '#e2e8f0',
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  padding: '2px 7px',
-                  borderRadius: '4px',
-                  border: '1px solid rgba(255, 255, 255, 0.07)',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  padding: '3px 8px',
+                  borderRadius: '6px',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '5px',
                 }}
               >
-                {item.stock.ticker.replace('PRE:', '')} <span style={{ color: 'var(--text-muted)' }}>{item.weight}%</span>
+                {item.stock.image && (
+                  <img
+                    src={item.stock.image}
+                    alt={item.stock.ticker}
+                    style={{ width: '13px', height: '13px', borderRadius: '50%', objectFit: 'contain' }}
+                  />
+                )}
+                <span>{item.stock.ticker}</span>
+                <span style={{ color: 'var(--text-muted)' }}>{item.weight}%</span>
               </span>
             ))}
-            {basket.constituents.length > 4 && (
+            {basket.constituents.length > 5 && (
               <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', alignSelf: 'center' }}>
-                +{basket.constituents.length - 4} more
+                +{basket.constituents.length - 5} more
               </span>
             )}
           </div>

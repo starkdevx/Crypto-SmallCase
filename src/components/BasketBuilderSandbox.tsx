@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ALL_STOCKS } from '../data/stocks';
+import { ALL_XSTOCKS, getStock } from '../data/stocks';
 import { Stock } from '../types/basket';
-import { Plus, Trash2, Sliders, Sparkles, TrendingUp, RefreshCw, CheckCircle2, Info } from 'lucide-react';
+import { Plus, Trash2, Sliders, Sparkles, RefreshCw, CheckCircle2, Info } from 'lucide-react';
 
 interface SelectedItem {
   stock: Stock;
@@ -11,15 +11,15 @@ interface SelectedItem {
 }
 
 export function BasketBuilderSandbox() {
-  const stockList = Object.values(ALL_STOCKS);
+  const stockList = ALL_XSTOCKS;
 
-  const [basketName, setBasketName] = useState('My Custom Frontier Basket');
-  const [basketThesis, setBasketThesis] = useState('High conviction combination of AI infrastructure and pre-IPO pioneers.');
+  const [basketName, setBasketName] = useState('My Custom xStock Basket');
+  const [basketThesis, setBasketThesis] = useState('High conviction basket of tokenized AI silicon, Bitcoin treasuries, and SpaceX.');
   const [selectedConstituents, setSelectedConstituents] = useState<SelectedItem[]>([
-    { stock: ALL_STOCKS.NVDA, weight: 35 },
-    { stock: ALL_STOCKS['PRE:SPACEX'], weight: 35 },
-    { stock: ALL_STOCKS['PRE:OPENAI'], weight: 20 },
-    { stock: ALL_STOCKS.COIN, weight: 10 },
+    { stock: getStock('NVDAX'), weight: 35 },
+    { stock: getStock('SPCXX'), weight: 30 },
+    { stock: getStock('MSTRX'), weight: 20 },
+    { stock: getStock('COINX'), weight: 15 },
   ]);
 
   const [searchStock, setSearchStock] = useState('');
@@ -27,9 +27,9 @@ export function BasketBuilderSandbox() {
   // Total weight
   const totalWeight = selectedConstituents.reduce((acc, curr) => acc + curr.weight, 0);
 
-  // Blended 1Y Rise calculation: weighted average of constituent 1y rise
+  // Blended 1Y Rise calculation
   const blended1YRise = totalWeight > 0
-    ? selectedConstituents.reduce((acc, curr) => acc + curr.stock.change1y * (curr.weight / totalWeight), 0)
+    ? selectedConstituents.reduce((acc, curr) => acc + (curr.stock.change1y ?? 50) * (curr.weight / totalWeight), 0)
     : 0;
 
   // Blended 24h change calculation
@@ -99,10 +99,10 @@ export function BasketBuilderSandbox() {
           <span>Interactive Sandbox Simulator</span>
         </div>
         <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '8px' }}>
-          Custom Basket Builder & Backtester
+          Custom xStock Basket Builder & Backtester
         </h2>
-        <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', maxWidth: '720px' }}>
-          Mix tokenized equities and private pre-IPO shares, tune allocation weights, and instantly compute blended historical % rise, NAV valuation, and constituent diversification.
+        <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', maxWidth: '780px' }}>
+          Select from 100 tokenized equities (Nvidia, SpaceX, MicroStrategy, TSMC, Tesla, Circle), calibrate allocation weights, and instantly compute blended NAV and 24h/1Y returns.
         </p>
       </div>
 
@@ -210,11 +210,20 @@ export function BasketBuilderSandbox() {
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                      <div>
-                        <span style={{ fontWeight: 800, color: '#ffffff', fontSize: '0.92rem' }}>
-                          {item.stock.ticker.replace('PRE:', '⚡')}
-                        </span>{' '}
-                        <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{item.stock.name}</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        {item.stock.image && (
+                          <img
+                            src={item.stock.image}
+                            alt={item.stock.ticker}
+                            style={{ width: '22px', height: '22px', borderRadius: '50%', objectFit: 'contain' }}
+                          />
+                        )}
+                        <div>
+                          <span style={{ fontWeight: 800, color: '#ffffff', fontSize: '0.92rem' }}>
+                            {item.stock.ticker}
+                          </span>{' '}
+                          <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>${item.stock.price.toFixed(2)}</span>
+                        </div>
                       </div>
 
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -247,8 +256,12 @@ export function BasketBuilderSandbox() {
                           cursor: 'pointer',
                         }}
                       />
-                      <span className="num-mono" style={{ fontSize: '0.76rem', color: 'var(--gain)', fontWeight: 600 }}>
-                        1Y: +{item.stock.change1y}%
+                      <span className="num-mono" style={{
+                        fontSize: '0.76rem',
+                        color: item.stock.change24h >= 0 ? 'var(--gain)' : 'var(--loss)',
+                        fontWeight: 600,
+                      }}>
+                        24h: {item.stock.change24h >= 0 ? '+' : ''}{item.stock.change24h}%
                       </span>
                     </div>
                   </div>
@@ -257,15 +270,15 @@ export function BasketBuilderSandbox() {
             )}
           </div>
 
-          {/* Add Stocks From Catalog */}
+          {/* Add Stocks From 100 Universe */}
           <div className="glass-panel" style={{ padding: '24px' }}>
             <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#ffffff', marginBottom: '12px' }}>
-              Add Stocks from Available Universe
+              Add Stocks from 100 xStocks Universe
             </h3>
 
             <input
               type="text"
-              placeholder="Search by ticker, company, or sector..."
+              placeholder="Search by symbol (e.g. MSTR, TSLA, NVDA)..."
               value={searchStock}
               onChange={(e) => setSearchStock(e.target.value)}
               style={{
@@ -280,7 +293,7 @@ export function BasketBuilderSandbox() {
               }}
             />
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px', maxHeight: '280px', overflowY: 'auto' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: '10px', maxHeight: '300px', overflowY: 'auto' }}>
               {availableStocks.map((stock) => (
                 <div
                   key={stock.ticker}
@@ -297,12 +310,21 @@ export function BasketBuilderSandbox() {
                     transition: 'border-color 0.2s ease',
                   }}
                 >
-                  <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.84rem', color: '#ffffff' }}>
-                      {stock.ticker.replace('PRE:', '⚡')}
-                    </div>
-                    <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                      ${stock.price} • +{stock.change1y}% 1Y
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    {stock.image && (
+                      <img
+                        src={stock.image}
+                        alt={stock.ticker}
+                        style={{ width: '20px', height: '20px', borderRadius: '50%', objectFit: 'contain' }}
+                      />
+                    )}
+                    <div>
+                      <div style={{ fontWeight: 800, fontSize: '0.84rem', color: '#ffffff' }}>
+                        {stock.ticker}
+                      </div>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+                        ${stock.price.toFixed(2)}
+                      </div>
                     </div>
                   </div>
                   <div style={{
@@ -347,7 +369,7 @@ export function BasketBuilderSandbox() {
                 +{blended1YRise.toFixed(1)}%
               </div>
               <div style={{ fontSize: '0.8rem', color: '#cbd5e1', marginTop: '4px' }}>
-                Calculated from constituent weights & historical performance data
+                Weighted average of underlying CoinGecko tokenized xStocks
               </div>
             </div>
 
@@ -426,7 +448,7 @@ export function BasketBuilderSandbox() {
             {/* Simulated Action */}
             <button
               onClick={() => {
-                alert(`Basket "${basketName}" simulated successfully!\nConstituents: ${selectedConstituents.length}\nBlended 1Y Rise: +${blended1YRise.toFixed(1)}%\n\nOnchain publishing will be enabled in v1 with Solana wallet connection.`);
+                alert(`Basket "${basketName}" simulated successfully!\nConstituents: ${selectedConstituents.length} xStocks\nBlended 1Y Rise: +${blended1YRise.toFixed(1)}%\n\nOnchain publishing will be enabled in v1 with Solana wallet connection.`);
               }}
               disabled={selectedConstituents.length === 0}
               style={{

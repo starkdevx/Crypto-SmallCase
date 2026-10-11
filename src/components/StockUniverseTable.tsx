@@ -1,39 +1,63 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ALL_STOCKS } from '../data/stocks';
+import { ALL_XSTOCKS } from '../data/stocks';
 import { STOCK_BASKETS } from '../data/baskets';
 import { Stock, Basket } from '../types/basket';
-import { Search, ArrowUpRight, ArrowDownRight, Filter, ShieldCheck, Layers } from 'lucide-react';
+import { Search, ArrowUpRight, ArrowDownRight, Layers, SlidersHorizontal, Sparkles } from 'lucide-react';
 
 interface StockUniverseTableProps {
   onSelectBasket: (basket: Basket) => void;
 }
 
 export function StockUniverseTable({ onSelectBasket }: StockUniverseTableProps) {
-  const stockList = Object.values(ALL_STOCKS);
-
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedProvider, setSelectedProvider] = useState<string>('All');
-  const [sortBy, setSortBy] = useState<'1y' | '24h' | 'price'>('1y');
+  const [selectedSector, setSelectedSector] = useState<string>('All');
+  const [sortBy, setSortBy] = useState<'rank' | 'volume' | 'change' | 'price' | 'market_cap'>('rank');
+
+  const sectors = [
+    'All',
+    'Semiconductors & AI Silicon',
+    'MegaCap Titans',
+    'Fintech & Bitcoin Treasuries',
+    'Market Index ETFs',
+    'Aerospace & Hard Tech',
+    'Sovereign Commodities',
+    'Enterprise Cloud & Software',
+  ];
+
+  // Helper to format volume
+  const formatVolume = (vol: number | undefined) => {
+    if (!vol) return '$0';
+    if (vol >= 1e6) return `$${(vol / 1e6).toFixed(2)}M`;
+    if (vol >= 1e3) return `$${(vol / 1e3).toFixed(1)}K`;
+    return `$${vol.toLocaleString()}`;
+  };
 
   // Filter & sort
-  const filteredStocks = stockList
+  const filteredStocks = ALL_XSTOCKS
     .filter((stock) => {
+      const query = searchQuery.toLowerCase();
       const matchesSearch =
-        stock.ticker.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        stock.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        stock.sector.toLowerCase().includes(searchQuery.toLowerCase());
+        stock.ticker.toLowerCase().includes(query) ||
+        stock.name.toLowerCase().includes(query) ||
+        stock.sector.toLowerCase().includes(query);
 
-      const matchesProvider =
-        selectedProvider === 'All' || stock.provider.includes(selectedProvider);
+      const matchesSector =
+        selectedSector === 'All' || stock.sector.toLowerCase().includes(selectedSector.toLowerCase());
 
-      return matchesSearch && matchesProvider;
+      return matchesSearch && matchesSector;
     })
     .sort((a, b) => {
-      if (sortBy === '1y') return b.change1y - a.change1y;
-      if (sortBy === '24h') return b.change24h - a.change24h;
-      return b.price - a.price;
+      if (sortBy === 'rank') {
+        const rankA = a.marketCapRank ?? 9999;
+        const rankB = b.marketCapRank ?? 9999;
+        return rankA - rankB;
+      }
+      if (sortBy === 'volume') return (b.volume24h ?? 0) - (a.volume24h ?? 0);
+      if (sortBy === 'change') return b.change24h - a.change24h;
+      if (sortBy === 'price') return b.price - a.price;
+      return 0;
     });
 
   // Find which baskets contain a given stock ticker
@@ -60,15 +84,44 @@ export function StockUniverseTable({ onSelectBasket }: StockUniverseTableProps) 
           fontWeight: 700,
           marginBottom: '10px',
         }}>
-          <ShieldCheck size={14} />
-          <span>Underlying Equities & Pre-IPO Universe</span>
+          <Sparkles size={14} />
+          <span>CoinGecko xStocks Ecosystem (100 Live Tokenized Stocks)</span>
         </div>
         <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '8px' }}>
-          Constituent Stocks & Oracle Feeds
+          Tokenized Stock Universe & Oracle Feeds
         </h2>
-        <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', maxWidth: '720px' }}>
-          Browse all 23 tokenized equities that comprise the Stocklana thematic baskets. Verify live pricing, 1-year historical rise, and data provider sources.
+        <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', maxWidth: '780px' }}>
+          Explore the full ecosystem of 100 tokenized equities traded onchain. View live prices, 24h volumes, market capitalizations, and underlying basket memberships.
         </p>
+      </div>
+
+      {/* Sector filter pills */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        overflowX: 'auto',
+        paddingBottom: '12px',
+        marginBottom: '20px',
+      }}>
+        {sectors.map((sec) => (
+          <button
+            key={sec}
+            onClick={() => setSelectedSector(sec)}
+            style={{
+              padding: '7px 14px',
+              borderRadius: '999px',
+              fontSize: '0.78rem',
+              fontWeight: 600,
+              whiteSpace: 'nowrap',
+              background: selectedSector === sec ? 'rgba(0, 229, 255, 0.2)' : 'rgba(255, 255, 255, 0.04)',
+              color: selectedSector === sec ? 'var(--solana-cyan)' : 'var(--text-secondary)',
+              border: selectedSector === sec ? '1px solid rgba(0, 229, 255, 0.4)' : '1px solid var(--border-subtle)',
+            }}
+          >
+            {sec}
+          </button>
+        ))}
       </div>
 
       {/* Controls Bar */}
@@ -85,11 +138,11 @@ export function StockUniverseTable({ onSelectBasket }: StockUniverseTableProps) 
         border: '1px solid var(--border-subtle)',
       }}>
         {/* Search Input */}
-        <div style={{ position: 'relative', minWidth: '260px', flex: 1 }}>
+        <div style={{ position: 'relative', minWidth: '280px', flex: 1 }}>
           <Search size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
           <input
             type="text"
-            placeholder="Search stocks by ticker or name..."
+            placeholder="Search 100 tokenized stocks by ticker or name..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{
@@ -104,30 +157,9 @@ export function StockUniverseTable({ onSelectBasket }: StockUniverseTableProps) 
           />
         </div>
 
-        {/* Provider Filter */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>Provider:</span>
-          {['All', 'Pyth', 'PreStocks', 'Tessera', 'xStocks'].map((prov) => (
-            <button
-              key={prov}
-              onClick={() => setSelectedProvider(prov)}
-              style={{
-                padding: '6px 12px',
-                borderRadius: '8px',
-                fontSize: '0.78rem',
-                fontWeight: 600,
-                background: selectedProvider === prov ? 'rgba(153, 69, 255, 0.25)' : 'rgba(255, 255, 255, 0.04)',
-                color: selectedProvider === prov ? '#ffffff' : 'var(--text-secondary)',
-                border: selectedProvider === prov ? '1px solid var(--solana-purple)' : '1px solid var(--border-subtle)',
-              }}
-            >
-              {prov}
-            </button>
-          ))}
-        </div>
-
         {/* Sort By */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <SlidersHorizontal size={15} color="var(--text-muted)" />
           <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>Sort by:</span>
           <select
             value={sortBy}
@@ -136,14 +168,15 @@ export function StockUniverseTable({ onSelectBasket }: StockUniverseTableProps) 
               background: 'rgba(255, 255, 255, 0.06)',
               border: '1px solid var(--border-subtle)',
               color: '#ffffff',
-              padding: '6px 12px',
+              padding: '8px 12px',
               borderRadius: '8px',
-              fontSize: '0.78rem',
+              fontSize: '0.8rem',
               fontWeight: 600,
             }}
           >
-            <option value="1y">Highest 1Y Rise (%)</option>
-            <option value="24h">Highest 24h Change (%)</option>
+            <option value="rank">Market Cap Rank</option>
+            <option value="volume">24h Trading Volume</option>
+            <option value="change">Highest 24h % Rise</option>
             <option value="price">Share Price</option>
           </select>
         </div>
@@ -154,14 +187,14 @@ export function StockUniverseTable({ onSelectBasket }: StockUniverseTableProps) 
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.86rem' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
-              <th style={{ padding: '14px 16px', fontWeight: 600 }}>Ticker & Company</th>
+              <th style={{ padding: '14px 16px', fontWeight: 600 }}>Rank & Asset</th>
               <th style={{ padding: '14px 16px', fontWeight: 600 }}>Sector</th>
-              <th style={{ padding: '14px 16px', fontWeight: 600 }}>Share Price</th>
+              <th style={{ padding: '14px 16px', fontWeight: 600 }}>Price</th>
               <th style={{ padding: '14px 16px', fontWeight: 600 }}>24h Change</th>
-              <th style={{ padding: '14px 16px', fontWeight: 600 }}>1Y Rise (%)</th>
-              <th style={{ padding: '14px 16px', fontWeight: 600 }}>Market Cap / Val</th>
-              <th style={{ padding: '14px 16px', fontWeight: 600 }}>Data Feed Provider</th>
-              <th style={{ padding: '14px 16px', fontWeight: 600 }}>Included in Baskets</th>
+              <th style={{ padding: '14px 16px', fontWeight: 600 }}>24h High / Low</th>
+              <th style={{ padding: '14px 16px', fontWeight: 600 }}>24h Volume</th>
+              <th style={{ padding: '14px 16px', fontWeight: 600 }}>Market Cap</th>
+              <th style={{ padding: '14px 16px', fontWeight: 600 }}>Baskets</th>
             </tr>
           </thead>
           <tbody>
@@ -177,24 +210,30 @@ export function StockUniverseTable({ onSelectBasket }: StockUniverseTableProps) 
                     transition: 'background 0.15s ease',
                   }}
                 >
-                  {/* Ticker & Name */}
+                  {/* Rank, Image, Ticker & Name */}
                   <td style={{ padding: '14px 16px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                       <span style={{
-                        padding: '4px 8px',
-                        borderRadius: '6px',
-                        background: stock.ticker.startsWith('PRE:') ? 'rgba(153, 69, 255, 0.2)' : 'rgba(255, 255, 255, 0.07)',
-                        color: stock.ticker.startsWith('PRE:') ? '#c084fc' : '#ffffff',
-                        fontWeight: 800,
-                        fontSize: '0.82rem',
-                        fontFamily: 'monospace',
+                        fontSize: '0.72rem',
+                        fontWeight: 700,
+                        color: 'var(--text-muted)',
+                        minWidth: '28px',
                       }}>
-                        {stock.ticker.replace('PRE:', '⚡')}
+                        #{stock.marketCapRank ?? '-'}
                       </span>
+                      {stock.image && (
+                        <img
+                          src={stock.image}
+                          alt={stock.ticker}
+                          style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'contain' }}
+                        />
+                      )}
                       <div>
-                        <div style={{ fontWeight: 700, color: '#ffffff' }}>{stock.name}</div>
-                        <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                          {stock.description.slice(0, 52)}...
+                        <div style={{ fontWeight: 800, color: '#ffffff', letterSpacing: '0.02em' }}>
+                          {stock.ticker}
+                        </div>
+                        <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
+                          {stock.name}
                         </div>
                       </div>
                     </div>
@@ -206,7 +245,7 @@ export function StockUniverseTable({ onSelectBasket }: StockUniverseTableProps) 
                   </td>
 
                   {/* Price */}
-                  <td className="num-mono" style={{ padding: '14px 16px', fontWeight: 800, color: '#ffffff' }}>
+                  <td className="num-mono" style={{ padding: '14px 16px', fontWeight: 800, color: '#ffffff', fontSize: '0.94rem' }}>
                     ${stock.price.toFixed(2)}
                   </td>
 
@@ -218,39 +257,19 @@ export function StockUniverseTable({ onSelectBasket }: StockUniverseTableProps) 
                     </span>
                   </td>
 
-                  {/* 1Y Rise */}
-                  <td className="num-mono" style={{ padding: '14px 16px' }}>
-                    <span style={{ color: 'var(--gain)', fontWeight: 800 }}>
-                      +{stock.change1y}%
-                    </span>
+                  {/* 24h High/Low */}
+                  <td className="num-mono" style={{ padding: '14px 16px', fontSize: '0.78rem', color: '#94a3b8' }}>
+                    ${stock.high24h?.toFixed(2) ?? '-'} / ${stock.low24h?.toFixed(2) ?? '-'}
+                  </td>
+
+                  {/* 24h Volume */}
+                  <td className="num-mono" style={{ padding: '14px 16px', color: '#cbd5e1' }}>
+                    {formatVolume(stock.volume24h)}
                   </td>
 
                   {/* Market Cap */}
-                  <td className="num-mono" style={{ padding: '14px 16px', color: '#94a3b8' }}>
+                  <td className="num-mono" style={{ padding: '14px 16px', color: '#ffffff', fontWeight: 600 }}>
                     {stock.marketCap}
-                  </td>
-
-                  {/* Data Feed Provider */}
-                  <td style={{ padding: '14px 16px' }}>
-                    <span style={{
-                      fontSize: '0.72rem',
-                      fontWeight: 600,
-                      padding: '3px 8px',
-                      borderRadius: '4px',
-                      background: stock.provider.includes('PreStocks')
-                        ? 'rgba(153, 69, 255, 0.15)'
-                        : stock.provider.includes('Tessera')
-                        ? 'rgba(0, 229, 255, 0.15)'
-                        : 'rgba(20, 241, 149, 0.12)',
-                      color: stock.provider.includes('PreStocks')
-                        ? '#c084fc'
-                        : stock.provider.includes('Tessera')
-                        ? 'var(--solana-cyan)'
-                        : 'var(--solana-green)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
-                    }}>
-                      {stock.provider}
-                    </span>
                   </td>
 
                   {/* Included In Baskets */}
@@ -266,7 +285,7 @@ export function StockUniverseTable({ onSelectBasket }: StockUniverseTableProps) 
                             gap: '4px',
                             background: 'rgba(255, 255, 255, 0.06)',
                             color: '#cbd5e1',
-                            padding: '3px 7px',
+                            padding: '3px 8px',
                             borderRadius: '4px',
                             fontSize: '0.72rem',
                             fontWeight: 600,

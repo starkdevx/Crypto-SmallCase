@@ -76,12 +76,11 @@ export default function HomePage() {
 
   const categories: BasketCategory[] = [
     'All',
-    'AI & Compute',
-    'Pre-IPO Giants',
-    'MegaCap 7',
-    'Fintech & Crypto Rails',
-    'Aerospace & Defense',
-    'High Yield & Dividends',
+    'MegaCap Titans',
+    'AI & Silicon Compute',
+    'Fintech & Bitcoin Rails',
+    'Private & Pre-IPO Tech',
+    'Market Index ETFs',
   ];
 
   return (
@@ -321,12 +320,12 @@ export default function HomePage() {
           <div>
             <strong style={{ color: '#ffffff' }}>Stocklana (Stonkcase)</strong> • Tokenized Thematic Stock Baskets on Solana
             <div style={{ color: 'var(--text-muted)', fontSize: '0.74rem', marginTop: '4px' }}>
-              Built for the Stocklana Hackathon. Powered by Pyth Network, PreStocks & Tessera protocols.
+              Built for the Stocklana Hackathon. Powered by CoinGecko xStocks Ecosystem, Pyth Network & PreStocks.
             </div>
           </div>
 
           <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-            <span style={{ color: 'var(--solana-green)', fontWeight: 600 }}>● v0 Alpha Live</span>
+            <span style={{ color: 'var(--solana-green)', fontWeight: 600 }}>● 100 Tokenized xStocks Live</span>
             <span>Solana Devnet Ready</span>
             <button
               onClick={() => setIsWalletModalOpen(true)}

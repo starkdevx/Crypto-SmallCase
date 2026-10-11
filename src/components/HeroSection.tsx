@@ -30,7 +30,7 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
         marginBottom: '20px',
       }}>
         <Sparkles size={14} />
-        <span>Solana Tokenized Equities • v0 Info & Analytics Release</span>
+        <span>Solana Tokenized Equities • CoinGecko xStocks Ecosystem Live</span>
       </div>
 
       <div style={{
@@ -54,7 +54,7 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}>
-              Thematic Stock Baskets
+              Tokenized Stock Baskets
             </span>{' '}
             on Solana.
           </h1>
@@ -66,7 +66,7 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
             marginBottom: '24px',
             maxWidth: '600px',
           }}>
-            Discover pre-curated baskets of tokenized US mega-caps, high-conviction AI chips, and pre-IPO pioneers (SpaceX, OpenAI, Stripe). Track live NAV, transparent constituent weights, and historical returns across any timeframe.
+            Curated thematic portfolios clustering 100 onchain tokenized stocks (Nvidia, SpaceX, MicroStrategy, Apple, Tesla, Circle, S&P 500). Track live basket NAV, 24h & 1Y % rise, constituent weights, and 24h volumes.
           </p>
 
           {/* v0 Roadmap Notice Box */}
@@ -82,7 +82,7 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
           }}>
             <Info size={18} color="var(--solana-green)" style={{ flexShrink: 0, marginTop: '2px' }} />
             <div style={{ fontSize: '0.85rem', color: '#cbd5e1', lineHeight: 1.5 }}>
-              <strong style={{ color: 'var(--solana-green)' }}>v0 Info Mode Active:</strong> Explore basket constituents, risk ratings, and % growth metrics. In the upcoming v1 release, you can connect your Phantom / Solflare wallet to purchase whole baskets with 1-click via Meteora multi-token swaps.
+              <strong style={{ color: 'var(--solana-green)' }}>v0 Info Mode Active:</strong> Powered by the 100 tokenized xStocks ecosystem with 24-hour smart caching to eliminate external API expenses. In v1, connect your Solana wallet to buy entire baskets with 1-click via Meteora.
             </div>
           </div>
         </div>
@@ -99,36 +99,36 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
               <TrendingUp size={18} color="var(--gain)" />
             </div>
             <div className="num-mono" style={{ fontSize: '1.9rem', fontWeight: 800, color: 'var(--gain)' }}>
-              +114.6%
+              +138.4%
             </div>
             <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-              Autonomous AI & Compute Grid
+              Bitcoin Treasuries & Onchain FinTech
             </div>
           </div>
 
           <div className="glass-panel" style={{ padding: '20px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Private Pre-IPOs</span>
+              <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Tokenized Stocks</span>
               <Zap size={18} color="var(--solana-purple)" />
             </div>
             <div className="num-mono" style={{ fontSize: '1.9rem', fontWeight: 800, color: '#e2e8f0' }}>
-              5 Unicorns
+              100 xStocks
             </div>
             <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-              SpaceX, OpenAI, Stripe & more
+              SpaceX, MSTR, NVDA, TSLA, CRCL
             </div>
           </div>
 
           <div className="glass-panel" style={{ padding: '20px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Oracle Precision</span>
+              <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: 600 }}>API Optimization</span>
               <ShieldCheck size={18} color="var(--solana-cyan)" />
             </div>
             <div className="num-mono" style={{ fontSize: '1.9rem', fontWeight: 800, color: '#e2e8f0' }}>
-              sub-400ms
+              0 Costs
             </div>
             <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-              Real-time Pyth & PreStocks Feeds
+              24h Daily Edge Revalidation
             </div>
           </div>
 
@@ -138,10 +138,10 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
               <Sparkles size={18} color="var(--accent-gold)" />
             </div>
             <div className="num-mono" style={{ fontSize: '1.9rem', fontWeight: 800, color: '#e2e8f0' }}>
-              $20 USDC
+              $25 USDC
             </div>
             <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-              Fractional tokenized shares
+              Fractional onchain shares
             </div>
           </div>
         </div>

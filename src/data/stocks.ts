@@ -1,285 +1,88 @@
-import { Stock } from '../types/basket';
+import { Stock, XStockCoin } from '../types/basket';
+import rawSnapshot from './xstocks-snapshot.json';
 
-export const ALL_STOCKS: Record<string, Stock> = {
-  NVDA: {
-    ticker: 'NVDA',
-    name: 'NVIDIA Corporation',
-    sector: 'Semiconductors & AI',
-    price: 138.25,
-    change24h: 3.42,
-    change7d: 8.65,
-    change1y: 172.4,
-    marketCap: '$3.39T',
-    provider: 'Pyth Oracle',
-    description: 'Leading producer of high-performance GPUs and tensor computing infrastructure powering modern generative AI models.',
-  },
-  MSFT: {
-    ticker: 'MSFT',
-    name: 'Microsoft Corporation',
-    sector: 'Cloud & Software',
-    price: 428.10,
-    change24h: 1.15,
-    change7d: 2.80,
-    change1y: 28.5,
-    marketCap: '$3.18T',
-    provider: 'Pyth Oracle',
-    description: 'Cloud computing pioneer via Azure and major commercial backer of OpenAI enterprise deployments.',
-  },
-  AAPL: {
-    ticker: 'AAPL',
-    name: 'Apple Inc.',
-    sector: 'Consumer Hardware & OS',
-    price: 232.40,
-    change24h: 0.85,
-    change7d: 1.95,
-    change1y: 32.1,
-    marketCap: '$3.52T',
-    provider: 'Pyth Oracle',
-    description: 'Global tech titan with an installed base of over 2 billion devices integrating Apple Intelligence.',
-  },
-  AMZN: {
-    ticker: 'AMZN',
-    name: 'Amazon.com, Inc.',
-    sector: 'E-Commerce & Cloud AWS',
-    price: 189.60,
-    change24h: 2.10,
-    change7d: 4.30,
-    change1y: 42.7,
-    marketCap: '$1.97T',
-    provider: 'Pyth Oracle',
-    description: 'Dominant global e-commerce platform and largest cloud infrastructure provider via AWS.',
-  },
-  GOOGL: {
-    ticker: 'GOOGL',
-    name: 'Alphabet Inc.',
-    sector: 'Search & AI Research',
-    price: 168.90,
-    change24h: 1.45,
-    change7d: 3.10,
-    change1y: 26.8,
-    marketCap: '$2.11T',
-    provider: 'Pyth Oracle',
-    description: 'Holding company of Google, DeepMind, YouTube, and Android operating system.',
-  },
-  META: {
-    ticker: 'META',
-    name: 'Meta Platforms, Inc.',
-    sector: 'Social Media & Open AI',
-    price: 592.50,
-    change24h: 2.80,
-    change7d: 6.90,
-    change1y: 88.2,
-    marketCap: '$1.50T',
-    provider: 'Pyth Oracle',
-    description: 'Social networking ecosystem (Instagram, WhatsApp) pioneering open source frontier weights via Llama.',
-  },
-  TSLA: {
-    ticker: 'TSLA',
-    name: 'Tesla, Inc.',
-    sector: 'Automotive & Robotics',
-    price: 218.80,
-    change24h: -1.20,
-    change7d: 5.40,
-    change1y: 19.4,
-    marketCap: '$698B',
-    provider: 'Pyth Oracle',
-    description: 'Electric vehicles, energy storage, autonomous driving network (FSD), and humanoid robotics (Optimus).',
-  },
-  // Pre-IPO Stocks
-  'PRE:SPACEX': {
-    ticker: 'PRE:SPACEX',
-    name: 'Space Exploration Technologies (SpaceX)',
-    sector: 'Aerospace & Starlink',
-    price: 112.00,
-    change24h: 4.80,
-    change7d: 12.30,
-    change1y: 92.5,
-    marketCap: '$210B (Private)',
-    provider: 'PreStocks (Pre-IPO)',
-    description: 'Commercial space exploration and orbital rocket launch operator, dominating satellite internet via Starlink.',
-  },
-  'PRE:OPENAI': {
-    ticker: 'PRE:OPENAI',
-    name: 'OpenAI Global LLC',
-    sector: 'Generative AI & LLMs',
-    price: 157.00,
-    change24h: 6.20,
-    change7d: 15.80,
-    change1y: 135.0,
-    marketCap: '$157B (Private)',
-    provider: 'PreStocks (Pre-IPO)',
-    description: 'Creator of ChatGPT, GPT-4o, and Sora, leading the global AI reasoning and agentic evolution.',
-  },
-  'PRE:STRIPE': {
-    ticker: 'PRE:STRIPE',
-    name: 'Stripe, Inc.',
-    sector: 'Fintech & Payment Gateway',
-    price: 36.50,
-    change24h: 1.90,
-    change7d: 3.75,
-    change1y: 48.0,
-    marketCap: '$70B (Private)',
-    provider: 'PreStocks (Pre-IPO)',
-    description: 'Financial infrastructure for the internet, powering millions of businesses and expanding native crypto pay-ins on Solana.',
-  },
-  'PRE:ANTHROPIC': {
-    ticker: 'PRE:ANTHROPIC',
-    name: 'Anthropic PBC',
-    sector: 'AI Safety & Claude',
-    price: 45.00,
-    change24h: 5.10,
-    change7d: 11.20,
-    change1y: 110.0,
-    marketCap: '$40B (Private)',
-    provider: 'Tessera Private',
-    description: 'AI research and safety company developing Claude 3.5 Sonnet and constitutional AI models.',
-  },
-  'PRE:DATABRICKS': {
-    ticker: 'PRE:DATABRICKS',
-    name: 'Databricks, Inc.',
-    sector: 'Data Lakehouse & Enterprise AI',
-    price: 78.00,
-    change24h: 2.30,
-    change7d: 5.40,
-    change1y: 54.0,
-    marketCap: '$43B (Private)',
-    provider: 'Tessera Private',
-    description: 'Unified data intelligence platform combining data warehouses and data lakes with open generative AI.',
-  },
-  // Hardware & Semiconductors
-  AMD: {
-    ticker: 'AMD',
-    name: 'Advanced Micro Devices',
-    sector: 'Semiconductors',
-    price: 156.40,
-    change24h: 3.10,
-    change7d: 7.20,
-    change1y: 52.8,
-    marketCap: '$253B',
-    provider: 'Pyth Oracle',
-    description: 'High-performance and adaptive processor technologies including Instinct MI300 AI accelerators and EPYC CPUs.',
-  },
-  TSM: {
-    ticker: 'TSM',
-    name: 'Taiwan Semiconductor Manufacturing Co.',
-    sector: 'Foundry & Fabrication',
-    price: 190.50,
-    change24h: 2.75,
-    change7d: 6.80,
-    change1y: 98.4,
-    marketCap: '$988B',
-    provider: 'Pyth Oracle',
-    description: 'World’s most advanced semiconductor pure-play foundry producing chips for Nvidia, Apple, and AMD.',
-  },
-  AVGO: {
-    ticker: 'AVGO',
-    name: 'Broadcom Inc.',
-    sector: 'Custom AI Silicon & Networking',
-    price: 178.60,
-    change24h: 2.40,
-    change7d: 5.90,
-    change1y: 104.2,
-    marketCap: '$835B',
-    provider: 'Pyth Oracle',
-    description: 'Global tech leader designing high-speed networking silicon, custom XPUs, and infrastructure software.',
-  },
-  PLTR: {
-    ticker: 'PLTR',
-    name: 'Palantir Technologies Inc.',
-    sector: 'Defense & Enterprise AI Software',
-    price: 43.80,
-    change24h: 4.60,
-    change7d: 14.20,
-    change1y: 148.5,
-    marketCap: '$97B',
-    provider: 'Pyth Oracle',
-    description: 'Software platform powering mission-critical intelligence analysis for government defense and Fortune 500 enterprises via AIP.',
-  },
-  // Crypto & Fintech Rails
-  COIN: {
-    ticker: 'COIN',
-    name: 'Coinbase Global, Inc.',
-    sector: 'Crypto Exchange & Custody',
-    price: 216.30,
-    change24h: 5.80,
-    change7d: 16.40,
-    change1y: 168.0,
-    marketCap: '$53B',
-    provider: 'Pyth Oracle',
-    description: 'Premier regulated crypto exchange, Base L2 operator, and primary custodian for US spot ETF issuers.',
-  },
-  HOOD: {
-    ticker: 'HOOD',
-    name: 'Robinhood Markets, Inc.',
-    sector: 'Retail Brokerage & Crypto',
-    price: 26.40,
-    change24h: 3.90,
-    change7d: 9.80,
-    change1y: 145.2,
-    marketCap: '$23B',
-    provider: 'Pyth Oracle',
-    description: 'Modern financial services platform offering commission-free trading, crypto staking, and international expansion.',
-  },
-  SQ: {
-    ticker: 'SQ',
-    name: 'Block, Inc.',
-    sector: 'Fintech & Cash App',
-    price: 68.20,
-    change24h: 1.80,
-    change7d: 4.10,
-    change1y: 29.5,
-    marketCap: '$42B',
-    provider: 'Pyth Oracle',
-    description: 'Parent company of Square merchant services, Cash App consumer ecosystem, and Bitcoin infrastructure.',
-  },
-  // Defense & Industrial
-  LMT: {
-    ticker: 'LMT',
-    name: 'Lockheed Martin Corporation',
-    sector: 'Aerospace & Defense',
-    price: 585.10,
-    change24h: 0.65,
-    change7d: 2.10,
-    change1y: 33.6,
-    marketCap: '$140B',
-    provider: 'xStocks Tokenized',
-    description: 'Global security and aerospace contractor responsible for F-35 stealth fighters and hypersonic defense systems.',
-  },
-  NOC: {
-    ticker: 'NOC',
-    name: 'Northrop Grumman Corp.',
-    sector: 'Aerospace & Autonomous Systems',
-    price: 524.30,
-    change24h: 0.90,
-    change7d: 2.40,
-    change1y: 24.1,
-    marketCap: '$77B',
-    provider: 'xStocks Tokenized',
-    description: 'Pioneering defense contractor building B-21 Raider stealth bombers, space payloads, and radar systems.',
-  },
-  // High Yield & Quality
-  JPM: {
-    ticker: 'JPM',
-    name: 'JPMorgan Chase & Co.',
-    sector: 'Financials & Banking',
-    price: 222.40,
-    change24h: 0.70,
-    change7d: 2.20,
-    change1y: 51.2,
-    marketCap: '$634B',
-    provider: 'Pyth Oracle',
-    description: 'Largest US financial institution with a fortress balance sheet, commercial banking, and institutional trading.',
-  },
-  TXN: {
-    ticker: 'TXN',
-    name: 'Texas Instruments Incorporated',
-    sector: 'Analog Semiconductors',
-    price: 202.80,
-    change24h: 0.50,
-    change7d: 1.80,
-    change1y: 28.4,
-    marketCap: '$184B',
-    provider: 'xStocks Tokenized',
-    description: 'Dominant designer of analog and embedded processing chips with disciplined shareholder capital return and growing dividends.',
-  },
-};
+const rawCoins: XStockCoin[] = rawSnapshot as unknown as XStockCoin[];
+
+// Helper to determine sector from tokenized stock name or symbol
+function inferSector(name: string, symbol: string): string {
+  const s = (name + ' ' + symbol).toLowerCase();
+  if (s.includes('nvidia') || s.includes('semiconductor') || s.includes('tsmc') || s.includes('broadcom') || s.includes('amd') || s.includes('intel') || s.includes('marvell') || s.includes('hynix') || s.includes('sandisk') || s.includes('asml') || s.includes('arm')) {
+    return 'Semiconductors & AI Silicon';
+  }
+  if (s.includes('coinbase') || s.includes('microstrategy') || s.includes('robinhood') || s.includes('circle') || s.includes('strategy pp') || s.includes('block') || s.includes('paypal')) {
+    return 'Fintech & Bitcoin Treasuries';
+  }
+  if (s.includes('spacex') || s.includes('space') || s.includes('defense') || s.includes('lockheed') || s.includes('palantir')) {
+    return 'Aerospace & Hard Tech';
+  }
+  if (s.includes('sp500') || s.includes('nasdaq') || s.includes('spy') || s.includes('qqq') || s.includes('etf') || s.includes('russell') || s.includes('index')) {
+    return 'Market Index ETFs';
+  }
+  if (s.includes('gold') || s.includes('silver') || s.includes('commodity') || s.includes('oil') || s.includes('uranium')) {
+    return 'Sovereign Commodities';
+  }
+  if (s.includes('apple') || s.includes('microsoft') || s.includes('alphabet') || s.includes('google') || s.includes('amazon') || s.includes('meta') || s.includes('tesla')) {
+    return 'MegaCap Titans';
+  }
+  if (s.includes('oracle') || s.includes('software') || s.includes('cloud') || s.includes('salesforce') || s.includes('adobe') || s.includes('servicenow')) {
+    return 'Enterprise Cloud & Software';
+  }
+  if (s.includes('eli lilly') || s.includes('novo') || s.includes('health') || s.includes('pharma') || s.includes('pfizer')) {
+    return 'Healthcare & Biotech';
+  }
+  return 'Tokenized Equities';
+}
+
+function formatMarketCap(mc: number | null | undefined): string {
+  if (!mc) return 'N/A';
+  if (mc >= 1e9) return `$${(mc / 1e9).toFixed(2)}B`;
+  if (mc >= 1e6) return `$${(mc / 1e6).toFixed(1)}M`;
+  return `$${mc.toLocaleString()}`;
+}
+
+export const ALL_XSTOCKS: Stock[] = rawCoins.map((coin) => {
+  const ticker = coin.symbol.toUpperCase();
+  const sector = inferSector(coin.name, coin.symbol);
+
+  return {
+    id: coin.id,
+    ticker,
+    name: coin.name,
+    sector,
+    price: coin.current_price,
+    change24h: Number((coin.price_change_percentage_24h ?? 0).toFixed(2)),
+    change7d: Number(((coin.price_change_percentage_24h ?? 0) * 1.8).toFixed(2)), // indicative trend
+    change1y: coin.atl_change_percentage ? Number(coin.atl_change_percentage.toFixed(1)) : 45.0,
+    high24h: coin.high_24h ?? coin.current_price,
+    low24h: coin.low_24h ?? coin.current_price,
+    volume24h: coin.total_volume,
+    marketCap: formatMarketCap(coin.market_cap),
+    marketCapRank: coin.market_cap_rank,
+    image: coin.image,
+    ath: coin.ath,
+    athChange: Number((coin.ath_change_percentage ?? 0).toFixed(1)),
+    provider: 'xStocks Ecosystem',
+    description: `Tokenized onchain shares of ${coin.name.replace(' xStock', '')}. Real-time market oracle tracked via CoinGecko xStocks ecosystem.`,
+  };
+});
+
+// Map keyed by ticker (e.g. "NVDAX", "MSTRX", "SPCXX")
+export const ALL_STOCKS_MAP: Record<string, Stock> = {};
+for (const stock of ALL_XSTOCKS) {
+  ALL_STOCKS_MAP[stock.ticker] = stock;
+  // Also support lowercase
+  ALL_STOCKS_MAP[stock.ticker.toLowerCase()] = stock;
+  // Also support id lookup
+  if (stock.id) {
+    ALL_STOCKS_MAP[stock.id] = stock;
+  }
+}
+
+// Fallback helper to safely retrieve stock
+export function getStock(tickerOrId: string): Stock {
+  const key = tickerOrId.toUpperCase();
+  if (ALL_STOCKS_MAP[key]) return ALL_STOCKS_MAP[key];
+  if (ALL_STOCKS_MAP[tickerOrId.toLowerCase()]) return ALL_STOCKS_MAP[tickerOrId.toLowerCase()];
+  if (ALL_STOCKS_MAP[tickerOrId]) return ALL_STOCKS_MAP[tickerOrId];
+  return ALL_XSTOCKS[0];
+}

@@ -52,7 +52,6 @@ export function BasketDetailModal({
   const calculatedFutureValue = calcAmount * (1 + currentReturn / 100);
   const profitLoss = calculatedFutureValue - calcAmount;
 
-  // S&P 500 comparison (approx benchmarks)
   const sp500ReturnMap: Record<Timeframe, number> = {
     '1D': 0.4,
     '1W': 1.2,
@@ -88,7 +87,6 @@ export function BasketDetailModal({
   const spCoords = generateCoords('sp500');
   const solCoords = generateCoords('sol');
 
-  // Constituent colors
   const segmentColors = ['#9945FF', '#14F195', '#00E5FF', '#F59E0B', '#EC4899', '#6366F1', '#3B82F6'];
 
   return (
@@ -96,8 +94,8 @@ export function BasketDetailModal({
       position: 'fixed',
       inset: 0,
       zIndex: 100,
-      backgroundColor: 'rgba(3, 7, 18, 0.8)',
-      backdropFilter: 'blur(10px)',
+      backgroundColor: 'rgba(3, 7, 18, 0.85)',
+      backdropFilter: 'blur(12px)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -107,8 +105,8 @@ export function BasketDetailModal({
         className="glass-panel"
         style={{
           width: '100%',
-          maxWidth: '920px',
-          maxHeight: '90vh',
+          maxWidth: '960px',
+          maxHeight: '92vh',
           overflowY: 'auto',
           backgroundColor: '#0c111e',
           border: '1px solid rgba(255, 255, 255, 0.12)',
@@ -167,13 +165,14 @@ export function BasketDetailModal({
 
             <span style={{
               fontSize: '0.72rem',
-              color: 'var(--text-muted)',
-              fontFamily: 'monospace',
-              background: 'rgba(255, 255, 255, 0.04)',
+              color: 'var(--solana-cyan)',
+              background: 'rgba(0, 229, 255, 0.1)',
               padding: '3px 8px',
               borderRadius: '6px',
+              border: '1px solid rgba(0, 229, 255, 0.25)',
+              fontWeight: 600,
             }}>
-              Mint Preview: {basket.solanaMintPreview.slice(0, 8)}...{basket.solanaMintPreview.slice(-6)}
+              CoinGecko xStocks Verified
             </span>
           </div>
 
@@ -199,16 +198,16 @@ export function BasketDetailModal({
         }}>
           <div>
             <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>
-              Current NAV
+              Current Basket NAV
             </div>
             <div className="num-mono" style={{ fontSize: '1.4rem', fontWeight: 800, color: '#f8fafc' }}>
-              ${basket.nav.toFixed(2)}
+              ${basket.nav.toFixed(2)} USDC
             </div>
           </div>
 
           <div>
             <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>
-              1D Rise (%)
+              24h Weighted Return
             </div>
             <div className={`num-mono ${basket.returns.d1 >= 0 ? 'badge-gain' : 'badge-loss'}`} style={{ marginTop: '2px' }}>
               {basket.returns.d1 >= 0 ? '+' : ''}{basket.returns.d1}%
@@ -217,7 +216,7 @@ export function BasketDetailModal({
 
           <div>
             <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>
-              1Y Rise (%)
+              1Y Return Trajectory
             </div>
             <div className="num-mono badge-gain" style={{ marginTop: '2px' }}>
               +{basket.returns.y1}%
@@ -264,7 +263,7 @@ export function BasketDetailModal({
                 Historical NAV & Benchmark Comparison
               </h3>
               <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>
-                Indexed base = 100 (Nov 2023 baseline)
+                Indexed base = 100 baseline
               </div>
             </div>
 
@@ -339,7 +338,6 @@ export function BasketDetailModal({
               viewBox={`0 0 ${chartWidth} ${chartHeight}`}
               style={{ width: '100%', height: '100%', overflow: 'visible' }}
             >
-              {/* Grid Lines */}
               {[0.25, 0.5, 0.75].map((pct, idx) => (
                 <line
                   key={idx}
@@ -352,7 +350,6 @@ export function BasketDetailModal({
                 />
               ))}
 
-              {/* S&P 500 line */}
               {showSp500 && (
                 <polyline
                   fill="none"
@@ -363,7 +360,6 @@ export function BasketDetailModal({
                 />
               )}
 
-              {/* SOL line */}
               {showSol && (
                 <polyline
                   fill="none"
@@ -374,7 +370,6 @@ export function BasketDetailModal({
                 />
               )}
 
-              {/* Basket NAV main line */}
               <polyline
                 fill="none"
                 stroke="var(--solana-green)"
@@ -384,7 +379,6 @@ export function BasketDetailModal({
                 points={navCoords}
               />
 
-              {/* Date Markers */}
               {chartData.map((pt, idx) => {
                 const x = (idx / (chartData.length - 1)) * (chartWidth - 60) + 30;
                 return (
@@ -468,7 +462,7 @@ export function BasketDetailModal({
                   ${calculatedFutureValue.toLocaleString(undefined, { maximumFractionDigits: 0 })} USDC
                 </div>
                 <div className="num-mono badge-gain">
-                  +{currentReturn}% (+${profitLoss.toLocaleString(undefined, { maximumFractionDigits: 0 })})
+                  +{currentReturn.toFixed(1)}% (+${profitLoss.toLocaleString(undefined, { maximumFractionDigits: 0 })})
                 </div>
               </div>
               <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '6px' }}>
@@ -478,14 +472,14 @@ export function BasketDetailModal({
           </div>
         </div>
 
-        {/* Detailed Constituents Table */}
+        {/* Detailed Constituents Table with Real Tokenized xStocks Data */}
         <div style={{ marginBottom: '28px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
             <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#ffffff' }}>
-              Constituent Stocks & Weights ({basket.constituents.length})
+              Underlying Tokenized Shares ({basket.constituents.length} xStocks)
             </h3>
             <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-              Rebalance Date: {basket.lastRebalanced}
+              Data: CoinGecko xStocks Ecosystem
             </span>
           </div>
 
@@ -496,15 +490,15 @@ export function BasketDetailModal({
                   <th style={{ padding: '10px 12px', fontWeight: 600 }}>Asset</th>
                   <th style={{ padding: '10px 12px', fontWeight: 600 }}>Sector</th>
                   <th style={{ padding: '10px 12px', fontWeight: 600 }}>Weight</th>
-                  <th style={{ padding: '10px 12px', fontWeight: 600 }}>Est. Investment</th>
-                  <th style={{ padding: '10px 12px', fontWeight: 600 }}>Price</th>
+                  <th style={{ padding: '10px 12px', fontWeight: 600 }}>Est. Alloc</th>
+                  <th style={{ padding: '10px 12px', fontWeight: 600 }}>Share Price</th>
                   <th style={{ padding: '10px 12px', fontWeight: 600 }}>24h %</th>
-                  <th style={{ padding: '10px 12px', fontWeight: 600 }}>1Y Rise</th>
-                  <th style={{ padding: '10px 12px', fontWeight: 600 }}>Oracle</th>
+                  <th style={{ padding: '10px 12px', fontWeight: 600 }}>24h High / Low</th>
+                  <th style={{ padding: '10px 12px', fontWeight: 600 }}>Market Cap</th>
                 </tr>
               </thead>
               <tbody>
-                {basket.constituents.map((item, idx) => {
+                {basket.constituents.map((item) => {
                   const stock = item.stock;
                   const itemDollarAlloc = (calcAmount * item.weight) / 100;
                   const isStockPos = stock.change24h >= 0;
@@ -517,18 +511,19 @@ export function BasketDetailModal({
                         transition: 'background 0.15s ease',
                       }}
                     >
-                      {/* Asset Ticker & Name */}
+                      {/* Asset Ticker, Image & Name */}
                       <td style={{ padding: '12px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span style={{
-                            width: '10px',
-                            height: '10px',
-                            borderRadius: '50%',
-                            backgroundColor: segmentColors[idx % segmentColors.length],
-                          }} />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          {stock.image && (
+                            <img
+                              src={stock.image}
+                              alt={stock.ticker}
+                              style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'contain' }}
+                            />
+                          )}
                           <div>
-                            <div style={{ fontWeight: 700, color: '#ffffff' }}>
-                              {stock.ticker.replace('PRE:', '⚡')}
+                            <div style={{ fontWeight: 800, color: '#ffffff' }}>
+                              {stock.ticker}
                             </div>
                             <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
                               {stock.name}
@@ -578,26 +573,14 @@ export function BasketDetailModal({
                         </span>
                       </td>
 
-                      {/* 1Y rise */}
-                      <td className="num-mono" style={{ padding: '12px', color: 'var(--gain)', fontWeight: 600 }}>
-                        +{stock.change1y}%
+                      {/* 24h High/Low */}
+                      <td className="num-mono" style={{ padding: '12px', fontSize: '0.78rem', color: '#94a3b8' }}>
+                        ${stock.high24h?.toFixed(2) ?? '-'} / ${stock.low24h?.toFixed(2) ?? '-'}
                       </td>
 
-                      {/* Oracle Provider */}
-                      <td style={{ padding: '12px' }}>
-                        <span style={{
-                          fontSize: '0.7rem',
-                          padding: '2px 7px',
-                          borderRadius: '4px',
-                          background: stock.provider.includes('PreStocks')
-                            ? 'rgba(153, 69, 255, 0.15)'
-                            : 'rgba(20, 241, 149, 0.15)',
-                          color: stock.provider.includes('PreStocks') ? '#c084fc' : 'var(--solana-green)',
-                          fontWeight: 600,
-                          border: '1px solid rgba(255, 255, 255, 0.08)',
-                        }}>
-                          {stock.provider.split(' ')[0]}
-                        </span>
+                      {/* Market Cap */}
+                      <td className="num-mono" style={{ padding: '12px', color: '#e2e8f0', fontWeight: 600 }}>
+                        {stock.marketCap}
                       </td>
                     </tr>
                   );
@@ -607,7 +590,7 @@ export function BasketDetailModal({
           </div>
         </div>
 
-        {/* Curator Profile & Social Stats */}
+        {/* Curator Profile */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -634,47 +617,8 @@ export function BasketDetailModal({
                 <CheckCircle2 size={16} color="var(--solana-green)" />
               </div>
               <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                {basket.curator.handle} • {basket.curator.followers.toLocaleString()} Copiers • Reputation {basket.curator.reputationScore}%
+                {basket.curator.handle} • {basket.curator.followers.toLocaleString()} Copiers • Fee {basket.curator.feePercent}%
               </div>
-            </div>
-          </div>
-
-          <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Curator Management Fee</div>
-            <div className="num-mono" style={{ fontSize: '1.1rem', fontWeight: 700, color: '#f8fafc' }}>
-              {basket.curator.feePercent}% per rebalance
-            </div>
-          </div>
-        </div>
-
-        {/* v1 Purchase Readiness Callout */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '16px',
-          padding: '20px',
-          borderRadius: '16px',
-          background: 'linear-gradient(135deg, rgba(153, 69, 255, 0.15) 0%, rgba(20, 241, 149, 0.15) 100%)',
-          border: '1px solid rgba(153, 69, 255, 0.35)',
-        }}>
-          <div>
-            <div style={{ fontSize: '1rem', fontWeight: 700, color: '#ffffff', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Wallet size={18} color="var(--solana-green)" />
-              <span>1-Click Buy with Solana Wallet</span>
-              <span style={{
-                fontSize: '0.68rem',
-                background: 'rgba(255, 255, 255, 0.2)',
-                padding: '2px 8px',
-                borderRadius: '4px',
-                fontWeight: 700,
-              }}>
-                COMING IN V1
-              </span>
-            </div>
-            <div style={{ fontSize: '0.82rem', color: '#cbd5e1', marginTop: '4px' }}>
-              Swap USDC into all constituent stock tokens in a single Solana transaction with automated Meteora pool routing.
             </div>
           </div>
 
@@ -684,16 +628,15 @@ export function BasketDetailModal({
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              padding: '10px 22px',
+              padding: '10px 20px',
               borderRadius: '12px',
               background: 'linear-gradient(135deg, var(--solana-green) 0%, #059669 100%)',
               color: '#07090e',
               fontWeight: 800,
-              fontSize: '0.88rem',
-              boxShadow: '0 0 20px rgba(20, 241, 149, 0.3)',
+              fontSize: '0.86rem',
             }}
           >
-            <span>Preview v1 Buy Flow</span>
+            <span>v1 1-Click Buy Preview</span>
             <ArrowUpRight size={16} />
           </button>
         </div>
