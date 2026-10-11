@@ -1,0 +1,902 @@
+{
+  "consumer-monopolies-essentials": {
+    "currentNav": 157.65,
+    "return1Y": -4.83,
+    "return1M": -2.54,
+    "return1W": 1.35,
+    "sampledChart": [
+      {
+        "date": "Oct 12",
+        "nav": 165.65
+      },
+      {
+        "date": "Oct 27",
+        "nav": 168.39
+      },
+      {
+        "date": "Nov 11",
+        "nav": 163.66
+      },
+      {
+        "date": "Nov 26",
+        "nav": 167.73
+      },
+      {
+        "date": "Dec 11",
+        "nav": 168.79
+      },
+      {
+        "date": "Dec 26",
+        "nav": 170.6
+      },
+      {
+        "date": "Jan 10",
+        "nav": 169.34
+      },
+      {
+        "date": "Jan 25",
+        "nav": 171.32
+      },
+      {
+        "date": "Feb 9",
+        "nav": 182.6
+      },
+      {
+        "date": "Feb 24",
+        "nav": 184.11
+      },
+      {
+        "date": "Mar 11",
+        "nav": 179.25
+      },
+      {
+        "date": "Mar 26",
+        "nav": 170.54
+      },
+      {
+        "date": "Apr 10",
+        "nav": 172.95
+      },
+      {
+        "date": "Apr 25",
+        "nav": 169.43
+      },
+      {
+        "date": "May 10",
+        "nav": 170.48
+      },
+      {
+        "date": "May 25",
+        "nav": 167.1
+      },
+      {
+        "date": "Jun 9",
+        "nav": 167.01
+      },
+      {
+        "date": "Jun 24",
+        "nav": 166.73
+      },
+      {
+        "date": "Jul 9",
+        "nav": 167.97
+      },
+      {
+        "date": "Jul 24",
+        "nav": 162.37
+      },
+      {
+        "date": "Aug 8",
+        "nav": 166.25
+      },
+      {
+        "date": "Aug 23",
+        "nav": 167.18
+      },
+      {
+        "date": "Sep 7",
+        "nav": 167.75
+      },
+      {
+        "date": "Sep 22",
+        "nav": 159.82
+      },
+      {
+        "date": "Oct 7",
+        "nav": 156.27
+      },
+      {
+        "date": "Oct 12",
+        "nav": 157.65
+      }
+    ]
+  },
+  "energy-sovereign-commodities": {
+    "currentNav": 197.82,
+    "return1Y": 10.68,
+    "return1M": -0.91,
+    "return1W": 0.57,
+    "sampledChart": [
+      {
+        "date": "Oct 12",
+        "nav": 178.73
+      },
+      {
+        "date": "Oct 27",
+        "nav": 165.04
+      },
+      {
+        "date": "Nov 11",
+        "nav": 162.5
+      },
+      {
+        "date": "Nov 26",
+        "nav": 165.06
+      },
+      {
+        "date": "Dec 11",
+        "nav": 173.75
+      },
+      {
+        "date": "Dec 26",
+        "nav": 180
+      },
+      {
+        "date": "Jan 10",
+        "nav": 185
+      },
+      {
+        "date": "Jan 25",
+        "nav": 198.97
+      },
+      {
+        "date": "Feb 9",
+        "nav": 203.81
+      },
+      {
+        "date": "Feb 24",
+        "nav": 208.36
+      },
+      {
+        "date": "Mar 11",
+        "nav": 205.29
+      },
+      {
+        "date": "Mar 26",
+        "nav": 187.98
+      },
+      {
+        "date": "Apr 10",
+        "nav": 195.68
+      },
+      {
+        "date": "Apr 25",
+        "nav": 196.76
+      },
+      {
+        "date": "May 10",
+        "nav": 189.18
+      },
+      {
+        "date": "May 25",
+        "nav": 184.95
+      },
+      {
+        "date": "Jun 9",
+        "nav": 184.55
+      },
+      {
+        "date": "Jun 24",
+        "nav": 180.24
+      },
+      {
+        "date": "Jul 9",
+        "nav": 190.87
+      },
+      {
+        "date": "Jul 24",
+        "nav": 190.26
+      },
+      {
+        "date": "Aug 8",
+        "nav": 194.18
+      },
+      {
+        "date": "Aug 23",
+        "nav": 200.23
+      },
+      {
+        "date": "Sep 7",
+        "nav": 199.79
+      },
+      {
+        "date": "Sep 22",
+        "nav": 200.9
+      },
+      {
+        "date": "Oct 7",
+        "nav": 197.2
+      },
+      {
+        "date": "Oct 12",
+        "nav": 197.82
+      }
+    ]
+  },
+  "mag7-titans-xstock": {
+    "currentNav": 391.24,
+    "return1Y": 11.31,
+    "return1M": 6.16,
+    "return1W": 0.1,
+    "sampledChart": [
+      {
+        "date": "Oct 12",
+        "nav": 351.48
+      },
+      {
+        "date": "Oct 27",
+        "nav": 369.66
+      },
+      {
+        "date": "Nov 11",
+        "nav": 358.34
+      },
+      {
+        "date": "Nov 26",
+        "nav": 344.39
+      },
+      {
+        "date": "Dec 11",
+        "nav": 348.41
+      },
+      {
+        "date": "Dec 26",
+        "nav": 356.85
+      },
+      {
+        "date": "Jan 10",
+        "nav": 352.02
+      },
+      {
+        "date": "Jan 25",
+        "nav": 345.7
+      },
+      {
+        "date": "Feb 9",
+        "nav": 336.79
+      },
+      {
+        "date": "Feb 24",
+        "nav": 322.7
+      },
+      {
+        "date": "Mar 11",
+        "nav": 327.65
+      },
+      {
+        "date": "Mar 26",
+        "nav": 308.23
+      },
+      {
+        "date": "Apr 10",
+        "nav": 316.73
+      },
+      {
+        "date": "Apr 25",
+        "nav": 347.94
+      },
+      {
+        "date": "May 10",
+        "nav": 355.89
+      },
+      {
+        "date": "May 25",
+        "nav": 357.23
+      },
+      {
+        "date": "Jun 9",
+        "nav": 342.03
+      },
+      {
+        "date": "Jun 24",
+        "nav": 324.83
+      },
+      {
+        "date": "Jul 9",
+        "nav": 338.46
+      },
+      {
+        "date": "Jul 24",
+        "nav": 330.29
+      },
+      {
+        "date": "Aug 8",
+        "nav": 360.1
+      },
+      {
+        "date": "Aug 23",
+        "nav": 350.73
+      },
+      {
+        "date": "Sep 7",
+        "nav": 365.65
+      },
+      {
+        "date": "Sep 22",
+        "nav": 386.17
+      },
+      {
+        "date": "Oct 7",
+        "nav": 392.31
+      },
+      {
+        "date": "Oct 12",
+        "nav": 391.24
+      }
+    ]
+  },
+  "ai-silicon-grid": {
+    "currentNav": 561.62,
+    "return1Y": 34.82,
+    "return1M": 0.63,
+    "return1W": -0.23,
+    "sampledChart": [
+      {
+        "date": "Oct 12",
+        "nav": 416.57
+      },
+      {
+        "date": "Oct 27",
+        "nav": 433.06
+      },
+      {
+        "date": "Nov 11",
+        "nav": 456.51
+      },
+      {
+        "date": "Nov 26",
+        "nav": 492.62
+      },
+      {
+        "date": "Dec 11",
+        "nav": 481.11
+      },
+      {
+        "date": "Dec 26",
+        "nav": 436.91
+      },
+      {
+        "date": "Jan 10",
+        "nav": 495.19
+      },
+      {
+        "date": "Jan 25",
+        "nav": 481.99
+      },
+      {
+        "date": "Feb 9",
+        "nav": 499.62
+      },
+      {
+        "date": "Feb 24",
+        "nav": 511.17
+      },
+      {
+        "date": "Mar 11",
+        "nav": 519.57
+      },
+      {
+        "date": "Mar 26",
+        "nav": 593.06
+      },
+      {
+        "date": "Apr 10",
+        "nav": 529.15
+      },
+      {
+        "date": "Apr 25",
+        "nav": 561.7
+      },
+      {
+        "date": "May 10",
+        "nav": 559.85
+      },
+      {
+        "date": "May 25",
+        "nav": 546
+      },
+      {
+        "date": "Jun 9",
+        "nav": 545.35
+      },
+      {
+        "date": "Jun 24",
+        "nav": 556.51
+      },
+      {
+        "date": "Jul 9",
+        "nav": 551.75
+      },
+      {
+        "date": "Jul 24",
+        "nav": 556.25
+      },
+      {
+        "date": "Aug 8",
+        "nav": 569.02
+      },
+      {
+        "date": "Aug 23",
+        "nav": 560.1
+      },
+      {
+        "date": "Sep 7",
+        "nav": 560.94
+      },
+      {
+        "date": "Sep 22",
+        "nav": 560.62
+      },
+      {
+        "date": "Oct 7",
+        "nav": 565.26
+      },
+      {
+        "date": "Oct 12",
+        "nav": 561.62
+      }
+    ]
+  },
+  "bitcoin-fintech-rails": {
+    "currentNav": 139.21,
+    "return1Y": -42.8,
+    "return1M": 7.41,
+    "return1W": -2.95,
+    "sampledChart": [
+      {
+        "date": "Oct 12",
+        "nav": 243.37
+      },
+      {
+        "date": "Oct 27",
+        "nav": 246.66
+      },
+      {
+        "date": "Nov 11",
+        "nav": 207.37
+      },
+      {
+        "date": "Nov 26",
+        "nav": 160.17
+      },
+      {
+        "date": "Dec 11",
+        "nav": 173.52
+      },
+      {
+        "date": "Dec 26",
+        "nav": 154.09
+      },
+      {
+        "date": "Jan 10",
+        "nav": 154.25
+      },
+      {
+        "date": "Jan 25",
+        "nav": 147.21
+      },
+      {
+        "date": "Feb 9",
+        "nav": 120.82
+      },
+      {
+        "date": "Feb 24",
+        "nav": 113.62
+      },
+      {
+        "date": "Mar 11",
+        "nav": 139.53
+      },
+      {
+        "date": "Mar 26",
+        "nav": 132.17
+      },
+      {
+        "date": "Apr 10",
+        "nav": 120.22
+      },
+      {
+        "date": "Apr 25",
+        "nav": 147.01
+      },
+      {
+        "date": "May 10",
+        "nav": 156.7
+      },
+      {
+        "date": "May 25",
+        "nav": 144.64
+      },
+      {
+        "date": "Jun 9",
+        "nav": 119.68
+      },
+      {
+        "date": "Jun 24",
+        "nav": 112.61
+      },
+      {
+        "date": "Jul 9",
+        "nav": 107.09
+      },
+      {
+        "date": "Jul 24",
+        "nav": 107.01
+      },
+      {
+        "date": "Aug 8",
+        "nav": 107.05
+      },
+      {
+        "date": "Aug 23",
+        "nav": 127.06
+      },
+      {
+        "date": "Sep 7",
+        "nav": 142.68
+      },
+      {
+        "date": "Sep 22",
+        "nav": 151.55
+      },
+      {
+        "date": "Oct 7",
+        "nav": 143.06
+      },
+      {
+        "date": "Oct 12",
+        "nav": 139.21
+      }
+    ]
+  },
+  "macro-sovereign-anchor": {
+    "currentNav": 580.11,
+    "return1Y": 12.96,
+    "return1M": 1.89,
+    "return1W": 0.65,
+    "sampledChart": [
+      {
+        "date": "Oct 12",
+        "nav": 513.57
+      },
+      {
+        "date": "Oct 27",
+        "nav": 519.8
+      },
+      {
+        "date": "Nov 11",
+        "nav": 526.72
+      },
+      {
+        "date": "Nov 26",
+        "nav": 513.81
+      },
+      {
+        "date": "Dec 11",
+        "nav": 521.01
+      },
+      {
+        "date": "Dec 26",
+        "nav": 523.5
+      },
+      {
+        "date": "Jan 10",
+        "nav": 524.82
+      },
+      {
+        "date": "Jan 25",
+        "nav": 528.74
+      },
+      {
+        "date": "Feb 9",
+        "nav": 527.86
+      },
+      {
+        "date": "Feb 24",
+        "nav": 527.04
+      },
+      {
+        "date": "Mar 11",
+        "nav": 526.85
+      },
+      {
+        "date": "Mar 26",
+        "nav": 502.66
+      },
+      {
+        "date": "Apr 10",
+        "nav": 518.23
+      },
+      {
+        "date": "Apr 25",
+        "nav": 536.76
+      },
+      {
+        "date": "May 10",
+        "nav": 558.93
+      },
+      {
+        "date": "May 25",
+        "nav": 561
+      },
+      {
+        "date": "Jun 9",
+        "nav": 555.12
+      },
+      {
+        "date": "Jun 24",
+        "nav": 551.99
+      },
+      {
+        "date": "Jul 9",
+        "nav": 555.29
+      },
+      {
+        "date": "Jul 24",
+        "nav": 547.4
+      },
+      {
+        "date": "Aug 8",
+        "nav": 574.36
+      },
+      {
+        "date": "Aug 23",
+        "nav": 568.49
+      },
+      {
+        "date": "Sep 7",
+        "nav": 574.13
+      },
+      {
+        "date": "Sep 22",
+        "nav": 575.55
+      },
+      {
+        "date": "Oct 7",
+        "nav": 580.17
+      },
+      {
+        "date": "Oct 12",
+        "nav": 580.11
+      }
+    ]
+  },
+  "health-and-medicines": {
+    "currentNav": 160.93,
+    "return1Y": -4.38,
+    "return1M": 1.95,
+    "return1W": 0.17,
+    "sampledChart": [
+      {
+        "date": "Oct 12",
+        "nav": 168.31
+      },
+      {
+        "date": "Oct 27",
+        "nav": 129.23
+      },
+      {
+        "date": "Nov 11",
+        "nav": 127.7
+      },
+      {
+        "date": "Nov 26",
+        "nav": 136.62
+      },
+      {
+        "date": "Dec 11",
+        "nav": 135.8
+      },
+      {
+        "date": "Dec 26",
+        "nav": 135.39
+      },
+      {
+        "date": "Jan 10",
+        "nav": 136.85
+      },
+      {
+        "date": "Jan 25",
+        "nav": 134.88
+      },
+      {
+        "date": "Feb 9",
+        "nav": 128.26
+      },
+      {
+        "date": "Feb 24",
+        "nav": 131.86
+      },
+      {
+        "date": "Mar 11",
+        "nav": 130.58
+      },
+      {
+        "date": "Mar 26",
+        "nav": 126.6
+      },
+      {
+        "date": "Apr 10",
+        "nav": 133.71
+      },
+      {
+        "date": "Apr 25",
+        "nav": 133.09
+      },
+      {
+        "date": "May 10",
+        "nav": 151.84
+      },
+      {
+        "date": "May 25",
+        "nav": 151.36
+      },
+      {
+        "date": "Jun 9",
+        "nav": 157.02
+      },
+      {
+        "date": "Jun 24",
+        "nav": 161
+      },
+      {
+        "date": "Jul 9",
+        "nav": 151.59
+      },
+      {
+        "date": "Jul 24",
+        "nav": 163.09
+      },
+      {
+        "date": "Aug 8",
+        "nav": 160.14
+      },
+      {
+        "date": "Aug 23",
+        "nav": 161.39
+      },
+      {
+        "date": "Sep 7",
+        "nav": 157.87
+      },
+      {
+        "date": "Sep 22",
+        "nav": 158.68
+      },
+      {
+        "date": "Oct 7",
+        "nav": 159.43
+      },
+      {
+        "date": "Oct 12",
+        "nav": 160.93
+      }
+    ]
+  },
+  "global-financial-hegemons-cards": {
+    "currentNav": 422.6,
+    "return1Y": 8.25,
+    "return1M": 0.38,
+    "return1W": 1.3,
+    "sampledChart": [
+      {
+        "date": "Oct 12",
+        "nav": 390.4
+      },
+      {
+        "date": "Oct 28",
+        "nav": 404.2
+      },
+      {
+        "date": "Nov 11",
+        "nav": 407.5
+      },
+      {
+        "date": "Nov 26",
+        "nav": 410.66
+      },
+      {
+        "date": "Dec 11",
+        "nav": 409.04
+      },
+      {
+        "date": "Dec 25",
+        "nav": 420.59
+      },
+      {
+        "date": "Jan 9",
+        "nav": 405.87
+      },
+      {
+        "date": "Jan 23",
+        "nav": 383.2
+      },
+      {
+        "date": "Feb 6",
+        "nav": 373.1
+      },
+      {
+        "date": "Feb 20",
+        "nav": 371.04
+      },
+      {
+        "date": "Mar 6",
+        "nav": 390.94
+      },
+      {
+        "date": "Mar 20",
+        "nav": 388.29
+      },
+      {
+        "date": "Apr 3",
+        "nav": 385.54
+      },
+      {
+        "date": "Apr 17",
+        "nav": 401.62
+      },
+      {
+        "date": "May 1",
+        "nav": 420.26
+      },
+      {
+        "date": "May 15",
+        "nav": 408.14
+      },
+      {
+        "date": "May 29",
+        "nav": 430.43
+      },
+      {
+        "date": "Jun 12",
+        "nav": 429.64
+      },
+      {
+        "date": "Jun 26",
+        "nav": 437.94
+      },
+      {
+        "date": "Jul 10",
+        "nav": 439.83
+      },
+      {
+        "date": "Jul 25",
+        "nav": 430.97
+      },
+      {
+        "date": "Aug 9",
+        "nav": 423.92
+      },
+      {
+        "date": "Aug 24",
+        "nav": 419.02
+      },
+      {
+        "date": "Sep 7",
+        "nav": 424.8
+      },
+      {
+        "date": "Sep 21",
+        "nav": 424.53
+      },
+      {
+        "date": "Oct 5",
+        "nav": 417.47
+      },
+      {
+        "date": "Oct 10",
+        "nav": 422.6
+      }
+    ]
+  }
+}

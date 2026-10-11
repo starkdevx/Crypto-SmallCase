@@ -37,6 +37,7 @@ export function BasketDetailModal({
   const [chartData, setChartData] = useState<BasketChartData | null>(null);
   const [isLoadingChart, setIsLoadingChart] = useState<boolean>(true);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const [hoverPos, setHoverPos] = useState<{ x: number; y: number } | null>(null);
   const [calcAmount, setCalcAmount] = useState<number>(1000);
   const svgRef = useRef<SVGSVGElement | null>(null);
 
@@ -136,18 +137,39 @@ export function BasketDetailModal({
   }
 
   const range = maxVal - minVal || 1;
-  const paddingX = 35;
-  const paddingY = 25;
-  const innerWidth = chartWidth - paddingX * 2;
-  const innerHeight = chartHeight - paddingY * 2;
+  const paddingLeft = 58;
+  const paddingRight = 18;
+  const paddingTop = 18;
+  const paddingBottom = 26;
+  const innerWidth = chartWidth - paddingLeft - paddingRight;
+  const innerHeight = chartHeight - paddingTop - paddingBottom;
 
   // Helper coordinate mapper
   const getY = (val: number) => {
-    return chartHeight - paddingY - ((val - minVal) / range) * innerHeight;
+    return chartHeight - paddingBottom - ((val - minVal) / range) * innerHeight;
   };
   const getX = (idx: number, total: number) => {
-    return paddingX + (idx / Math.max(1, total - 1)) * innerWidth;
+    return paddingLeft + (idx / Math.max(1, total - 1)) * innerWidth;
   };
+
+  // Y-axis tick guidelines & value labels (4 evenly spaced ticks)
+  const yTicksCount = 4;
+  const yTicks = Array.from({ length: yTicksCount }, (_, i) => {
+    const ratio = i / (yTicksCount - 1);
+    const val = minVal + ratio * (maxVal - minVal);
+    const y = getY(val);
+    let label = '';
+    if (viewMode === 'all') {
+      label = `${val >= 0 ? '+' : ''}${val.toFixed(1)}%`;
+    } else if (val >= 1000) {
+      label = `$${val.toFixed(0)}`;
+    } else if (val >= 100) {
+      label = `$${val.toFixed(1)}`;
+    } else {
+      label = `$${val.toFixed(2)}`;
+    }
+    return { val, y, label };
+  });
 
   // Polyline for aggregate basket
   const navCoords = activeNavSeries
@@ -161,16 +183,16 @@ export function BasketDetailModal({
 
   // SVG Area path for Aggregate Mode
   const areaPath = activeNavSeries.length > 1
-    ? `M ${getX(0, activeNavSeries.length)},${chartHeight - paddingY} ` +
+    ? `M ${getX(0, activeNavSeries.length)},${chartHeight - paddingBottom} ` +
       activeNavSeries.map((pt, idx) => `L ${getX(idx, activeNavSeries.length)},${getY(pt.nav)}`).join(' ') +
-      ` L ${getX(activeNavSeries.length - 1, activeNavSeries.length)},${chartHeight - paddingY} Z`
+      ` L ${getX(activeNavSeries.length - 1, activeNavSeries.length)},${chartHeight - paddingBottom} Z`
     : '';
 
   // SVG Area path for Single Stock Mode
   const singleStockAreaPath = activeSingleStockSeries.length > 1
-    ? `M ${getX(0, activeSingleStockSeries.length)},${chartHeight - paddingY} ` +
+    ? `M ${getX(0, activeSingleStockSeries.length)},${chartHeight - paddingBottom} ` +
       activeSingleStockSeries.map((pt, idx) => `L ${getX(idx, activeSingleStockSeries.length)},${getY(pt.price)}`).join(' ') +
-      ` L ${getX(activeSingleStockSeries.length - 1, activeSingleStockSeries.length)},${chartHeight - paddingY} Z`
+      ` L ${getX(activeSingleStockSeries.length - 1, activeSingleStockSeries.length)},${chartHeight - paddingBottom} Z`
     : '';
 
   // Handle interactive hover over SVG
@@ -178,15 +200,18 @@ export function BasketDetailModal({
     if (!svgRef.current || pointsCount === 0) return;
     const rect = svgRef.current.getBoundingClientRect();
     const clientX = e.clientX - rect.left;
+    const clientY = e.clientY - rect.top;
     const normalizedX = (clientX / rect.width) * chartWidth;
-    const clampedX = Math.max(paddingX, Math.min(chartWidth - paddingX, normalizedX));
-    const ratio = (clampedX - paddingX) / innerWidth;
+    const clampedX = Math.max(paddingLeft, Math.min(chartWidth - paddingRight, normalizedX));
+    const ratio = (clampedX - paddingLeft) / innerWidth;
     const index = Math.round(ratio * (pointsCount - 1));
     setHoverIndex(Math.max(0, Math.min(pointsCount - 1, index)));
+    setHoverPos({ x: clientX, y: clientY });
   };
 
   const handleMouseLeave = () => {
     setHoverIndex(null);
+    setHoverPos(null);
   };
 
   // Hovered data point details
@@ -539,32 +564,45 @@ export function BasketDetailModal({
               <svg
                 ref={svgRef}
                 viewBox={`0 0 ${chartWidth} ${chartHeight}`}
-                style={{ width: '100%', height: '100%', overflow: 'visible', cursor: 'crosshair' }}
+                style={{ width: '100%', height: '100%', overflow: 'visible', cursor: 'pointer' }}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
               >
                 <defs>
                   <linearGradient id="basketAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="var(--solana-green)" stopOpacity="0.25" />
+                    <stop offset="0%" stopColor="var(--solana-green)" stopOpacity="0.22" />
                     <stop offset="100%" stopColor="var(--solana-green)" stopOpacity="0.0" />
                   </linearGradient>
                   <linearGradient id="stockAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#00E5FF" stopOpacity="0.2" />
+                    <stop offset="0%" stopColor="#00E5FF" stopOpacity="0.18" />
                     <stop offset="100%" stopColor="#00E5FF" stopOpacity="0.0" />
                   </linearGradient>
                 </defs>
 
-                {/* Grid guidelines */}
-                {[0.2, 0.45, 0.7, 0.95].map((pct, idx) => (
-                  <line
-                    key={idx}
-                    x1={paddingX}
-                    y1={chartHeight * pct}
-                    x2={chartWidth - paddingX}
-                    y2={chartHeight * pct}
-                    stroke="rgba(255, 255, 255, 0.05)"
-                    strokeDasharray="4 4"
-                  />
+                {/* Y-Axis Guidelines & Value Ticks */}
+                {yTicks.map((tick, idx) => (
+                  <g key={idx}>
+                    <line
+                      x1={paddingLeft}
+                      y1={tick.y}
+                      x2={chartWidth - paddingRight}
+                      y2={tick.y}
+                      stroke="rgba(255, 255, 255, 0.07)"
+                      strokeDasharray="4 4"
+                    />
+                    <text
+                      x={paddingLeft - 8}
+                      y={tick.y}
+                      textAnchor="end"
+                      alignmentBaseline="middle"
+                      fill="#94a3b8"
+                      fontSize="9.5"
+                      fontWeight="600"
+                      fontFamily="var(--font-mono, monospace)"
+                    >
+                      {tick.label}
+                    </text>
+                  </g>
                 ))}
 
                 {/* VIEW MODE 1: Aggregate Basket NAV */}
@@ -574,7 +612,7 @@ export function BasketDetailModal({
                     <polyline
                       fill="none"
                       stroke="var(--solana-green)"
-                      strokeWidth="3"
+                      strokeWidth="1.8"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       points={navCoords}
@@ -596,7 +634,7 @@ export function BasketDetailModal({
                           key={c.ticker}
                           fill="none"
                           stroke={color}
-                          strokeWidth="2"
+                          strokeWidth="1.3"
                           strokeOpacity="0.85"
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -614,7 +652,7 @@ export function BasketDetailModal({
                     <polyline
                       fill="none"
                       stroke="#00E5FF"
-                      strokeWidth="3"
+                      strokeWidth="1.8"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       points={singleStockCoords}
@@ -626,12 +664,12 @@ export function BasketDetailModal({
                 {hoverIndex !== null && pointsCount > 0 && (
                   <line
                     x1={getX(hoverIndex, pointsCount)}
-                    y1={paddingY}
+                    y1={paddingTop}
                     x2={getX(hoverIndex, pointsCount)}
-                    y2={chartHeight - paddingY}
-                    stroke="rgba(255, 255, 255, 0.35)"
+                    y2={chartHeight - paddingBottom}
+                    stroke="rgba(255, 255, 255, 0.3)"
                     strokeDasharray="3 3"
-                    strokeWidth="1.5"
+                    strokeWidth="1.2"
                   />
                 )}
 
@@ -646,10 +684,10 @@ export function BasketDetailModal({
                         ? getY(hoveredStockPoint.price)
                         : getY(hoveredNavPoint ? hoveredNavPoint.returnPct : 0)
                     }
-                    r="5"
+                    r="4"
                     fill="#ffffff"
                     stroke={viewMode === 'aggregate' ? 'var(--solana-green)' : '#00E5FF'}
-                    strokeWidth="2.5"
+                    strokeWidth="2"
                   />
                 )}
 
@@ -684,20 +722,25 @@ export function BasketDetailModal({
               </svg>
             )}
 
-            {/* Floating Interactive Tooltip */}
-            {hoverIndex !== null && (
+            {/* Dynamic Floating Interactive Tooltip positioned near cursor */}
+            {hoverIndex !== null && hoverPos && (
               <div
                 style={{
                   position: 'absolute',
-                  top: '12px',
-                  right: '16px',
-                  padding: '8px 14px',
+                  left: `${hoverPos.x}px`,
+                  top: `${Math.max(10, Math.min(170, hoverPos.y - 25))}px`,
+                  transform: hoverPos.x > 460 ? 'translate(-108%, 0)' : 'translate(14px, 0)',
+                  padding: '8px 12px',
                   borderRadius: '10px',
-                  background: 'rgba(10, 15, 29, 0.95)',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  boxShadow: '0 6px 20px rgba(0, 0, 0, 0.6)',
+                  background: 'rgba(9, 14, 26, 0.96)',
+                  border: '1px solid rgba(255, 255, 255, 0.18)',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.75)',
                   pointerEvents: 'none',
                   fontSize: '0.78rem',
+                  zIndex: 30,
+                  whiteSpace: 'nowrap',
+                  backdropFilter: 'blur(10px)',
+                  transition: 'transform 0.08s ease-out',
                 }}
               >
                 {viewMode === 'aggregate' && hoveredNavPoint && (
