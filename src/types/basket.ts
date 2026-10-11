@@ -2,28 +2,61 @@ export type RiskTier = 'Low' | 'Moderate' | 'High' | 'Aggressive';
 
 export type BasketCategory =
   | 'All'
-  | 'AI & Compute'
-  | 'Pre-IPO Giants'
-  | 'MegaCap 7'
-  | 'Fintech & Crypto Rails'
-  | 'Aerospace & Defense'
-  | 'High Yield & Dividends';
+  | 'AI & Silicon Compute'
+  | 'Private & Pre-IPO Tech'
+  | 'MegaCap Titans'
+  | 'Fintech & Bitcoin Rails'
+  | 'Market Index ETFs'
+  | 'Sovereign Commodities';
 
 export type StockProvider =
+  | 'xStocks Ecosystem'
   | 'Pyth Oracle'
   | 'PreStocks (Pre-IPO)'
-  | 'Tessera Private'
-  | 'xStocks Tokenized';
+  | 'Tessera Private';
+
+export interface XStockCoin {
+  id: string;
+  symbol: string;
+  name: string;
+  image: string;
+  current_price: number;
+  market_cap: number;
+  market_cap_rank: number | null;
+  fully_diluted_valuation: number | null;
+  total_volume: number;
+  high_24h: number | null;
+  low_24h: number | null;
+  price_change_24h: number | null;
+  price_change_percentage_24h: number | null;
+  circulating_supply: number;
+  total_supply: number | null;
+  ath: number;
+  ath_change_percentage: number;
+  ath_date: string;
+  atl: number;
+  atl_change_percentage: number;
+  atl_date: string;
+  last_updated: string;
+}
 
 export interface Stock {
+  id?: string;
   ticker: string;
   name: string;
   sector: string;
   price: number;
   change24h: number;
-  change7d: number;
-  change1y: number;
+  change7d?: number;
+  change1y?: number;
+  high24h?: number;
+  low24h?: number;
+  volume24h?: number;
   marketCap: string;
+  marketCapRank?: number | null;
+  image?: string;
+  ath?: number;
+  athChange?: number;
   provider: StockProvider;
   description: string;
 }
