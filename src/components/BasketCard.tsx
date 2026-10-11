@@ -49,18 +49,36 @@ export function BasketCard({
 
   const riskStyle = getRiskStyle(basket.riskTier);
 
-  // Sparkline generator
-  const points = basket.historicalChart.map((pt) => pt.nav);
+  // Dynamic sparkline points adapting to selectedTimeframe
+  const chartSlice = (() => {
+    if (selectedTimeframe === '1D') return basket.historicalChart.slice(-3);
+    if (selectedTimeframe === '1W') return basket.historicalChart.slice(-5);
+    if (selectedTimeframe === '1M') return basket.historicalChart.slice(-8);
+    return basket.historicalChart;
+  })();
+
+  const points = chartSlice.map((pt) => pt.nav);
   const minVal = Math.min(...points);
   const maxVal = Math.max(...points);
   const range = maxVal - minVal || 1;
   const svgWidth = 260;
   const svgHeight = 52;
   const coords = points.map((val, idx) => {
-    const x = (idx / (points.length - 1)) * svgWidth;
+    const x = (idx / Math.max(1, points.length - 1)) * svgWidth;
     const y = svgHeight - ((val - minVal) / range) * (svgHeight - 12) - 6;
     return `${x.toFixed(1)},${y.toFixed(1)}`;
   }).join(' ');
+
+  // Gradient area fill for sparkline
+  const areaCoords = points.length > 1
+    ? `M 0,${svgHeight} ` +
+      points.map((val, idx) => {
+        const x = (idx / Math.max(1, points.length - 1)) * svgWidth;
+        const y = svgHeight - ((val - minVal) / range) * (svgHeight - 12) - 6;
+        return `L ${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(' ') +
+      ` L ${svgWidth},${svgHeight} Z`
+    : '';
 
   // Colors for constituents stacked bar
   const segmentColors = ['#9945FF', '#14F195', '#00E5FF', '#F59E0B', '#EC4899', '#6366F1', '#3B82F6'];
@@ -177,10 +195,17 @@ export function BasketCard({
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
             style={{ width: '100%', height: '46px', overflow: 'visible' }}
           >
+            <defs>
+              <linearGradient id={`sparkGrad-${basket.id}`} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={isPositive ? 'var(--solana-green)' : 'var(--loss)'} stopOpacity="0.22" />
+                <stop offset="100%" stopColor={isPositive ? 'var(--solana-green)' : 'var(--loss)'} stopOpacity="0.0" />
+              </linearGradient>
+            </defs>
+            {areaCoords && <path d={areaCoords} fill={`url(#sparkGrad-${basket.id})`} />}
             <polyline
               fill="none"
               stroke={isPositive ? 'var(--solana-green)' : 'var(--loss)'}
-              strokeWidth="2.4"
+              strokeWidth="2.0"
               strokeLinecap="round"
               strokeLinejoin="round"
               points={coords}

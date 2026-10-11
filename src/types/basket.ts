@@ -90,8 +90,8 @@ export interface BasketCurator {
 export interface ChartDataPoint {
   date: string;
   nav: number;
-  sp500: number;
-  sol: number;
+  sp500?: number;
+  sol?: number;
 }
 
 export interface Basket {
