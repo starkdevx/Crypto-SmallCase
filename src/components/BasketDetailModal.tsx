@@ -47,7 +47,13 @@ export function BasketDetailModal({
     setIsLoadingChart(true);
     setHoverIndex(null);
 
-    fetch(`/api/basket-chart?basketId=${basket.id}`)
+    fetch(`/api/basket-chart?basketId=${basket.id}&_t=${Date.now()}`, {
+      cache: 'no-store',
+      headers: {
+        'Pragma': 'no-cache',
+        'Cache-Control': 'no-cache',
+      },
+    })
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch chart data');
         return res.json();
@@ -158,6 +164,13 @@ export function BasketDetailModal({
     ? `M ${getX(0, activeNavSeries.length)},${chartHeight - paddingY} ` +
       activeNavSeries.map((pt, idx) => `L ${getX(idx, activeNavSeries.length)},${getY(pt.nav)}`).join(' ') +
       ` L ${getX(activeNavSeries.length - 1, activeNavSeries.length)},${chartHeight - paddingY} Z`
+    : '';
+
+  // SVG Area path for Single Stock Mode
+  const singleStockAreaPath = activeSingleStockSeries.length > 1
+    ? `M ${getX(0, activeSingleStockSeries.length)},${chartHeight - paddingY} ` +
+      activeSingleStockSeries.map((pt, idx) => `L ${getX(idx, activeSingleStockSeries.length)},${getY(pt.price)}`).join(' ') +
+      ` L ${getX(activeSingleStockSeries.length - 1, activeSingleStockSeries.length)},${chartHeight - paddingY} Z`
     : '';
 
   // Handle interactive hover over SVG
@@ -597,6 +610,7 @@ export function BasketDetailModal({
                 {/* VIEW MODE 3: Single Constituent Stock */}
                 {viewMode !== 'aggregate' && viewMode !== 'all' && (
                   <>
+                    {singleStockAreaPath && <path d={singleStockAreaPath} fill="url(#stockAreaGrad)" />}
                     <polyline
                       fill="none"
                       stroke="#00E5FF"
@@ -640,16 +654,17 @@ export function BasketDetailModal({
                 )}
 
                 {/* X-Axis Dates */}
-                {activeNavSeries.length > 0 && (
+                {(viewMode !== 'aggregate' && viewMode !== 'all' ? activeSingleStockSeries : activeNavSeries).length > 0 && (
                   <>
                     {[0, 0.25, 0.5, 0.75, 1].map((pct, idx) => {
+                      const activeSeries = viewMode !== 'aggregate' && viewMode !== 'all' ? activeSingleStockSeries : activeNavSeries;
                       const dataIdx = Math.min(
-                        activeNavSeries.length - 1,
-                        Math.round(pct * (activeNavSeries.length - 1))
+                        activeSeries.length - 1,
+                        Math.round(pct * (activeSeries.length - 1))
                       );
-                      const pt = activeNavSeries[dataIdx];
+                      const pt = activeSeries[dataIdx];
                       if (!pt) return null;
-                      const x = getX(dataIdx, activeNavSeries.length);
+                      const x = getX(dataIdx, activeSeries.length);
                       return (
                         <text
                           key={idx}

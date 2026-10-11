@@ -51,22 +51,31 @@ function ensureCacheDir() {
   }
 }
 
-// Generate fallback baseline points if CoinGecko is rate-limited
+// Generate natural Brownian motion random walk if CoinGecko is unreachable (NEVER a periodic sine wave)
 function generateFallbackPrices(currentPrice: number, change24h: number, days = 365): [number, number][] {
   const result: [number, number][] = [];
   const now = Date.now();
   const oneDay = 24 * 60 * 60 * 1000;
-  
-  // Starting price 1 year ago with a slight upward drift
-  let price = currentPrice * 0.75;
-  for (let i = days; i >= 0; i--) {
+
+  // Backward random walk starting at current price and walking into the past
+  let price = currentPrice;
+  result.unshift([now, Number(price.toFixed(2))]);
+
+  // Daily return drift & volatility based on asset's actual 24h change
+  const dailyDrift = (change24h / 100) * 0.1;
+  const dailyVol = 0.018; // 1.8% daily volatility
+
+  for (let i = 1; i <= days; i++) {
     const timestamp = now - i * oneDay;
-    // Controlled organic fluctuation ending at current price
-    const progress = (days - i) / days;
-    const target = currentPrice * (0.75 + progress * 0.25);
-    const noise = (Math.sin(i * 0.35) * 0.03 + (Math.random() - 0.5) * 0.02) * currentPrice;
-    const finalPt = i === 0 ? currentPrice : Math.max(1, target + noise);
-    result.push([timestamp, Number(finalPt.toFixed(2))]);
+    // Box-Muller transform for normal distribution
+    const u1 = Math.max(0.0001, Math.random());
+    const u2 = Math.random();
+    const z = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+
+    // Step backward in time with inverted drift
+    const step = -dailyDrift + dailyVol * z;
+    price = Math.max(0.1, price * (1 + step));
+    result.unshift([timestamp, Number(price.toFixed(2))]);
   }
   return result;
 }
@@ -76,13 +85,13 @@ export async function getCoinChart(coinId: string, ticker: string): Promise<[num
   ensureCacheDir();
   const cacheFile = path.join(CACHE_DIR, `${coinId}.json`);
 
-  // Check 24-hour cache
+  // Check 24-hour cache (ONLY if real data, NEVER synthetic)
   if (fs.existsSync(cacheFile)) {
     try {
       const stats = fs.statSync(cacheFile);
       const isFresh = Date.now() - stats.mtimeMs < CACHE_TTL_MS;
       const content = JSON.parse(fs.readFileSync(cacheFile, 'utf8'));
-      if (content.prices && content.prices.length > 0) {
+      if (content.prices && content.prices.length > 0 && !content.isSyntheticFallback) {
         if (isFresh) {
           return content.prices;
         }
@@ -99,8 +108,9 @@ export async function getCoinChart(coinId: string, ticker: string): Promise<[num
     const res = await fetch(url, {
       headers: {
         Accept: 'application/json',
+        'User-Agent': 'Mozilla/5.0 Stocklana/1.0',
       },
-      next: { revalidate: 86400 },
+      cache: 'no-store',
     });
 
     if (res.ok) {
@@ -117,25 +127,20 @@ export async function getCoinChart(coinId: string, ticker: string): Promise<[num
     console.warn(`[ChartCache] Error fetching ${coinId}:`, err);
   }
 
-  // If CoinGecko rate-limited (HTTP 429) and an older cache exists, use it!
+  // If CoinGecko rate-limited (HTTP 429) and an older real cache exists, use it!
   if (fs.existsSync(cacheFile)) {
     try {
       const content = JSON.parse(fs.readFileSync(cacheFile, 'utf8'));
-      if (content.prices?.length > 0) return content.prices;
+      if (content.prices?.length > 0 && !content.isSyntheticFallback) {
+        return content.prices;
+      }
     } catch {
       // continue to fallback
     }
   }
 
-  // Fallback generation so charts never crash
-  const fallback = generateFallbackPrices(stock.price, stock.change24h);
-  try {
-    fs.writeFileSync(
-      cacheFile,
-      JSON.stringify({ coinId, updatedAt: Date.now(), prices: fallback, isSyntheticFallback: true }, null, 2)
-    );
-  } catch {}
-  return fallback;
+  // In-memory natural fallback (do not persist to cache to allow immediate retry)
+  return generateFallbackPrices(stock.price, stock.change24h);
 }
 
 function formatDate(timestamp: number): string {

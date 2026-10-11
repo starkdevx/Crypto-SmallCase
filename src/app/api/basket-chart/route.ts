@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getBasketChartData } from '@/lib/chartService';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const basketId = searchParams.get('basketId');
@@ -17,7 +20,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(data, {
       headers: {
-        'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=86400',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+        Pragma: 'no-cache',
+        Expires: '0',
       },
     });
   } catch (error) {
