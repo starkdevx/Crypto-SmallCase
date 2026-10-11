@@ -80,23 +80,6 @@ export function BasketCard({
       }}
       onClick={() => onSelect(basket)}
     >
-      {/* Featured Banner Accent */}
-      {basket.isFeatured && (
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          background: 'linear-gradient(135deg, var(--solana-purple) 0%, var(--solana-green) 100%)',
-          padding: '3px 14px',
-          borderBottomLeftRadius: '10px',
-          fontSize: '0.68rem',
-          fontWeight: 800,
-          color: '#ffffff',
-          letterSpacing: '0.05em',
-        }}>
-          FEATURED xSTOCK
-        </div>
-      )}
 
       <div>
         {/* Top Badges */}
@@ -277,16 +260,12 @@ export function BasketCard({
         justifyContent: 'space-between',
         gap: '10px',
       }}>
-        {/* Curator Info */}
+        {/* Basket Metadata */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <img
-            src={basket.curator.avatar}
-            alt={basket.curator.name}
-            style={{ width: '26px', height: '26px', borderRadius: '50%', objectFit: 'cover' }}
-          />
-          <div style={{ fontSize: '0.74rem' }}>
-            <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{basket.curator.name}</div>
-            <div style={{ color: 'var(--text-muted)' }}>Fee {basket.curator.feePercent}%</div>
+          <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
+            Min <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>${basket.minInvestmentUsdc} USDC</span>
+            <span style={{ margin: '0 6px', opacity: 0.4 }}>•</span>
+            <span>{basket.rebalanceFrequency}</span>
           </div>
         </div>
 

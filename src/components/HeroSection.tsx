@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Sparkles, TrendingUp, ShieldCheck, Zap, Info } from 'lucide-react';
+import { Sparkles, TrendingUp, ShieldCheck, Zap } from 'lucide-react';
 
 interface HeroSectionProps {
   onLearnMore: () => void;
@@ -15,23 +15,6 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
       margin: '0 auto',
       position: 'relative',
     }}>
-      {/* Top Tag */}
-      <div style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '8px',
-        padding: '6px 14px',
-        borderRadius: '999px',
-        background: 'rgba(153, 69, 255, 0.12)',
-        border: '1px solid rgba(153, 69, 255, 0.3)',
-        fontSize: '0.8rem',
-        fontWeight: 600,
-        color: '#c084fc',
-        marginBottom: '20px',
-      }}>
-        <Sparkles size={14} />
-        <span>Solana Tokenized Equities • CoinGecko xStocks Ecosystem Live</span>
-      </div>
 
       <div style={{
         display: 'grid',
@@ -69,22 +52,6 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
             Curated thematic portfolios clustering 100 onchain tokenized stocks (Nvidia, SpaceX, MicroStrategy, Apple, Tesla, Circle, S&P 500). Track live basket NAV, 24h & 1Y % rise, constituent weights, and 24h volumes.
           </p>
 
-          {/* v0 Roadmap Notice Box */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '12px',
-            padding: '14px 18px',
-            borderRadius: '12px',
-            background: 'rgba(20, 241, 149, 0.05)',
-            border: '1px solid rgba(20, 241, 149, 0.2)',
-            maxWidth: '640px',
-          }}>
-            <Info size={18} color="var(--solana-green)" style={{ flexShrink: 0, marginTop: '2px' }} />
-            <div style={{ fontSize: '0.85rem', color: '#cbd5e1', lineHeight: 1.5 }}>
-              <strong style={{ color: 'var(--solana-green)' }}>v0 Info Mode Active:</strong> Powered by the 100 tokenized xStocks ecosystem with 24-hour smart caching to eliminate external API expenses. In v1, connect your Solana wallet to buy entire baskets with 1-click via Meteora.
-            </div>
-          </div>
         </div>
 
         {/* Highlight Stats Bento Grid */}

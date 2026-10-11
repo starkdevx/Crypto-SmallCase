@@ -192,12 +192,12 @@ export function BasketComparisonModal({
                 ))}
               </tr>
 
-              {/* Curator */}
+              {/* Rebalance Schedule */}
               <tr style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)' }}>
-                <td style={{ padding: '12px 14px', color: 'var(--text-secondary)', fontWeight: 600 }}>Curator & Fee</td>
+                <td style={{ padding: '12px 14px', color: 'var(--text-secondary)', fontWeight: 600 }}>Rebalance Schedule</td>
                 {comparedBaskets.map((b) => (
                   <td key={b.id} style={{ padding: '12px 14px', color: '#cbd5e1' }}>
-                    {b.curator.name} ({b.curator.feePercent}%)
+                    {b.rebalanceFrequency}
                   </td>
                 ))}
               </tr>
