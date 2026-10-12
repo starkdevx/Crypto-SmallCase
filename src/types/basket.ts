@@ -115,4 +115,4 @@ export interface Basket {
   isFeatured?: boolean;
 }
 
-export type Timeframe = '1D' | '1W' | '1M' | '1Y' | 'ALL';
+export type Timeframe = '1D' | '1W' | '1M' | '1Y';

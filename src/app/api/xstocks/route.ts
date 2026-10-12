@@ -8,7 +8,7 @@ export async function GET() {
       {
         headers: {
           Accept: 'application/json',
-          'User-Agent': 'Stocklana-App/1.0',
+          'User-Agent': 'xCase-App/1.0',
         },
         next: { revalidate: 86400 }, // 24-hour daily cache
       }

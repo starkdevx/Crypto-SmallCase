@@ -1013,7 +1013,7 @@ export function BasketDetailModal({
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span style={{ fontWeight: 700, fontSize: '0.96rem', color: '#ffffff' }}>
-                  Stocklana Thematic Index
+                  xCase Thematic Index
                 </span>
                 <CheckCircle2 size={16} color="var(--solana-green)" />
               </div>
@@ -1037,7 +1037,7 @@ export function BasketDetailModal({
               fontSize: '0.86rem',
             }}
           >
-            <span>v1 1-Click Buy Preview</span>
+            <span>1-Click Buy Simulation</span>
             <ArrowUpRight size={16} />
           </button>
         </div>

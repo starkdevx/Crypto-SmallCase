@@ -108,7 +108,7 @@ export async function getCoinChart(coinId: string, ticker: string): Promise<[num
     const res = await fetch(url, {
       headers: {
         Accept: 'application/json',
-        'User-Agent': 'Mozilla/5.0 Stocklana/1.0',
+        'User-Agent': 'Mozilla/5.0 xCase/1.0',
       },
       cache: 'no-store',
     });

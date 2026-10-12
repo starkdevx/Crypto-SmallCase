@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!basket) {
     return {
-      title: 'Basket Not Found | Stocklana',
+      title: 'Basket Not Found | xCase',
     };
   }
 
   return {
-    title: `${basket.title} (${basket.category}) | Stocklana`,
+    title: `${basket.title} (${basket.category}) | xCase`,
     description: basket.description || basket.tagline,
     openGraph: {
       title: `${basket.title} - Tokenized Stock Basket on Solana`,

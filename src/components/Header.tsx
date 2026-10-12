@@ -76,8 +76,8 @@ export function Header({
                 SOLANA
               </span>
             </div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-              Tokenized Thematic Stock Baskets on Solana
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+              SmallCase for Crypto
             </div>
           </div>
         </div>

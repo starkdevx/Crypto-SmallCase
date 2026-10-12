@@ -13,19 +13,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Stocklana (Stonkcase) — Tokenized Stock Baskets on Solana',
+  title: 'xCase — Tokenized Stock Baskets on Solana',
   description:
     'Invest in thematic baskets of tokenized US equities and pre-IPO technology giants (SpaceX, OpenAI, Nvidia) on Solana. Real-time NAV, Pyth price feeds, and social copy-investing.',
   keywords: [
+    'xCase',
+    'Crypto Smallcase',
     'Solana',
     'Stock Baskets',
     'Tokenized Equities',
     'Pre-IPO Stocks',
-    'Smallcase for Solana',
+    'Smallcase for Crypto',
     'Pyth Network',
     'PreStocks',
     'Tessera',
-    'Stonkcase',
   ],
 };
 

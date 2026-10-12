@@ -429,7 +429,7 @@ export function BasketBuilderSandbox() {
               </div>
             </div>
 
-            {/* v1 Roadmap Notice */}
+            {/* Onchain Publishing Notice */}
             <div style={{
               display: 'flex',
               gap: '10px',
@@ -441,14 +441,14 @@ export function BasketBuilderSandbox() {
             }}>
               <Info size={16} color="var(--solana-cyan)" style={{ flexShrink: 0, marginTop: '2px' }} />
               <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
-                In v1, you will be able to publish this basket onchain, share it with the Solana community, and earn <strong style={{ color: '#ffffff' }}>0.25% creator fees</strong> on every copier investment!
+                Publish this basket onchain, share it with the Solana community, and earn <strong style={{ color: '#ffffff' }}>0.25% creator fees</strong> on every copier investment!
               </div>
             </div>
 
             {/* Simulated Action */}
             <button
               onClick={() => {
-                alert(`Basket "${basketName}" simulated successfully!\nConstituents: ${selectedConstituents.length} xStocks\nBlended 1Y Rise: +${blended1YRise.toFixed(1)}%\n\nOnchain publishing will be enabled in v1 with Solana wallet connection.`);
+                alert(`Basket "${basketName}" simulated successfully!\nConstituents: ${selectedConstituents.length} xStocks\nBlended 1Y Rise: +${blended1YRise.toFixed(1)}%\n\nOnchain publishing will be enabled with Solana wallet connection.`);
               }}
               disabled={selectedConstituents.length === 0}
               style={{

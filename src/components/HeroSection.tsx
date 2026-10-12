@@ -49,7 +49,7 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
             marginBottom: '24px',
             maxWidth: '600px',
           }}>
-            Curated thematic portfolios clustering 100 onchain tokenized stocks (Nvidia, SpaceX, MicroStrategy, Apple, Tesla, Circle, S&P 500). Track live basket NAV, 24h & 1Y % rise, constituent weights, and 24h volumes.
+            Thematic portfolio investing built for Web3. Buy diversified baskets of tokenized US equities (Nvidia, Apple, SpaceX, Tesla) and crypto rails in 1-click on Solana—powered by real-time onchain NAV and instant liquidity.
           </p>
 
         </div>

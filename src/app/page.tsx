@@ -11,13 +11,12 @@ import { BasketBuilderSandbox } from '../components/BasketBuilderSandbox';
 import { StockUniverseTable } from '../components/StockUniverseTable';
 import { WalletRoadmapModal } from '../components/WalletRoadmapModal';
 import { STOCK_BASKETS } from '../data/baskets';
-import { Basket, BasketCategory, Timeframe } from '../types/basket';
+import { Basket, Timeframe } from '../types/basket';
 import { Search, Filter, Sparkles, Layers, SlidersHorizontal, Check } from 'lucide-react';
 
 export default function HomePage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'baskets' | 'stocks' | 'builder'>('baskets');
-  const [selectedCategory, setSelectedCategory] = useState<BasketCategory>('All');
   const [selectedTimeframe, setSelectedTimeframe] = useState<Timeframe>('1Y');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'return' | 'nav' | 'risk'>('return');
@@ -49,17 +48,18 @@ export default function HomePage() {
 
   // Filter & sort baskets
   const filteredBaskets = STOCK_BASKETS.filter((b) => {
-    const matchesCategory = selectedCategory === 'All' || b.category === selectedCategory;
-    const matchesSearch =
-      b.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      b.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      b.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase())) ||
+    if (!searchQuery.trim()) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      b.title.toLowerCase().includes(query) ||
+      b.tagline.toLowerCase().includes(query) ||
+      b.tags.some((t) => t.toLowerCase().includes(query)) ||
       b.constituents.some(
         (c) =>
-          c.stock.ticker.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          c.stock.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    return matchesCategory && matchesSearch;
+          c.stock.ticker.toLowerCase().includes(query) ||
+          c.stock.name.toLowerCase().includes(query)
+      )
+    );
   }).sort((a, b) => {
     const getReturn = (basket: Basket) => {
       switch (selectedTimeframe) {
@@ -67,7 +67,6 @@ export default function HomePage() {
         case '1W': return basket.returns.w1;
         case '1M': return basket.returns.m1;
         case '1Y': return basket.returns.y1;
-        case 'ALL': return basket.returns.allTime;
       }
     };
 
@@ -77,18 +76,6 @@ export default function HomePage() {
     const riskScore = { Low: 1, Moderate: 2, High: 3, Aggressive: 4 };
     return riskScore[a.riskTier] - riskScore[b.riskTier];
   });
-
-  const categories: BasketCategory[] = [
-    'All',
-    'Value & Cashflow Fortress',
-    'Healthcare & Essential Medicines',
-    'Global Banking & Card Rails',
-    'Energy & Real Commodities',
-    'MegaCap Titans',
-    'AI & Silicon Compute',
-    'Fintech & Bitcoin Rails',
-    'Market Index ETFs',
-  ];
 
   return (
     <main style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -110,132 +97,94 @@ export default function HomePage() {
       {/* Tab Switch Body */}
       {activeTab === 'baskets' && (
         <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px 64px', width: '100%' }}>
-          {/* Controls Bar: Categories, Timeframe, Search, Sort */}
+          {/* Controls Bar: Timeframe, Search, Sort */}
           <div style={{
             background: 'rgba(16, 22, 35, 0.7)',
             backdropFilter: 'blur(12px)',
             border: '1px solid var(--border-subtle)',
-            borderRadius: '20px',
-            padding: '20px',
+            borderRadius: '16px',
+            padding: '16px 20px',
             marginBottom: '32px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '16px',
           }}>
-            {/* Top row: Category pills */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              overflowX: 'auto',
-              paddingBottom: '14px',
-              marginBottom: '16px',
-              borderBottom: '1px solid var(--border-subtle)',
-            }}>
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  style={{
-                    padding: '8px 16px',
-                    borderRadius: '10px',
-                    fontSize: '0.82rem',
-                    fontWeight: 600,
-                    whiteSpace: 'nowrap',
-                    background: selectedCategory === cat
-                      ? 'linear-gradient(135deg, rgba(153, 69, 255, 0.35) 0%, rgba(20, 241, 149, 0.25) 100%)'
-                      : 'rgba(255, 255, 255, 0.04)',
-                    color: selectedCategory === cat ? '#ffffff' : 'var(--text-secondary)',
-                    border: selectedCategory === cat
-                      ? '1px solid rgba(153, 69, 255, 0.4)'
-                      : '1px solid transparent',
-                  }}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-
-            {/* Bottom row: Timeframe, Search, Sort */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              gap: '16px',
-            }}>
-              {/* Timeframe selector */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                  % Rise Timeframe:
-                </span>
-                <div style={{
-                  display: 'flex',
-                  gap: '4px',
-                  background: 'rgba(0, 0, 0, 0.4)',
-                  padding: '4px',
-                  borderRadius: '10px',
-                  border: '1px solid var(--border-subtle)',
-                }}>
-                  {(['1D', '1W', '1M', '1Y', 'ALL'] as Timeframe[]).map((tf) => (
-                    <button
-                      key={tf}
-                      onClick={() => setSelectedTimeframe(tf)}
-                      style={{
-                        padding: '6px 12px',
-                        borderRadius: '6px',
-                        fontSize: '0.78rem',
-                        fontWeight: 700,
-                        background: selectedTimeframe === tf ? 'var(--solana-purple)' : 'transparent',
-                        color: selectedTimeframe === tf ? '#ffffff' : 'var(--text-secondary)',
-                      }}
-                    >
-                      {tf}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Search & Sort Group */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', flex: 1, justifyContent: 'flex-end' }}>
-                {/* Search */}
-                <div style={{ position: 'relative', minWidth: '240px' }}>
-                  <Search size={15} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
-                  <input
-                    type="text"
-                    placeholder="Search baskets or stock (e.g. NVDA, SpaceX)..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+            {/* Timeframe selector */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                % Rise Timeframe:
+              </span>
+              <div style={{
+                display: 'flex',
+                gap: '4px',
+                background: 'rgba(0, 0, 0, 0.4)',
+                padding: '4px',
+                borderRadius: '10px',
+                border: '1px solid var(--border-subtle)',
+              }}>
+                {(['1D', '1W', '1M', '1Y'] as Timeframe[]).map((tf) => (
+                  <button
+                    key={tf}
+                    onClick={() => setSelectedTimeframe(tf)}
                     style={{
-                      width: '100%',
-                      background: 'rgba(255, 255, 255, 0.04)',
-                      border: '1px solid var(--border-subtle)',
-                      borderRadius: '10px',
-                      padding: '8px 14px 8px 36px',
-                      color: '#ffffff',
-                      fontSize: '0.84rem',
-                    }}
-                  />
-                </div>
-
-                {/* Sort dropdown */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <SlidersHorizontal size={15} color="var(--text-muted)" />
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value as any)}
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.04)',
-                      border: '1px solid var(--border-subtle)',
-                      borderRadius: '10px',
-                      padding: '8px 12px',
-                      color: '#ffffff',
-                      fontSize: '0.82rem',
-                      fontWeight: 600,
+                      padding: '6px 12px',
+                      borderRadius: '6px',
+                      fontSize: '0.78rem',
+                      fontWeight: 700,
+                      background: selectedTimeframe === tf ? 'var(--solana-purple)' : 'transparent',
+                      color: selectedTimeframe === tf ? '#ffffff' : 'var(--text-secondary)',
                     }}
                   >
-                    <option value="return">Highest % Rise ({selectedTimeframe})</option>
-                    <option value="nav">Highest Basket NAV</option>
-                    <option value="risk">Lowest Volatility / Risk</option>
-                  </select>
-                </div>
+                    {tf}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Search & Sort Group */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', flex: 1, justifyContent: 'flex-end' }}>
+              {/* Search */}
+              <div style={{ position: 'relative', minWidth: '240px' }}>
+                <Search size={15} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+                <input
+                  type="text"
+                  placeholder="Search baskets or stock (e.g. NVDA, SpaceX)..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{
+                    width: '100%',
+                    background: 'rgba(255, 255, 255, 0.04)',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: '10px',
+                    padding: '8px 14px 8px 36px',
+                    color: '#ffffff',
+                    fontSize: '0.84rem',
+                  }}
+                />
+              </div>
+
+              {/* Sort dropdown */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <SlidersHorizontal size={15} color="var(--text-muted)" />
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as any)}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.04)',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: '10px',
+                    padding: '8px 12px',
+                    color: '#ffffff',
+                    fontSize: '0.82rem',
+                    fontWeight: 600,
+                  }}
+                >
+                  <option value="return">Highest % Rise ({selectedTimeframe})</option>
+                  <option value="nav">Highest Basket NAV</option>
+                  <option value="risk">Lowest Volatility / Risk</option>
+                </select>
               </div>
             </div>
           </div>
@@ -248,7 +197,7 @@ export default function HomePage() {
                 No baskets matched your search
               </h3>
               <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)' }}>
-                Try searching for another ticker like NVDA, SpaceX, or select "All" categories.
+                Try searching for another ticker like NVDA, SpaceX, or clear the search query.
               </p>
             </div>
           ) : (
@@ -317,7 +266,7 @@ export default function HomePage() {
           color: 'var(--text-secondary)',
         }}>
           <div>
-            <strong style={{ color: '#ffffff' }}>xCase</strong> • Tokenized Thematic Stock Baskets on Solana
+            <strong style={{ color: '#ffffff' }}>xCase</strong> • SmallCase for Crypto on Solana
             <div style={{ color: 'var(--text-muted)', fontSize: '0.74rem', marginTop: '4px' }}>
               Powered by CoinGecko xStocks Ecosystem, Pyth Network & PreStocks.
             </div>

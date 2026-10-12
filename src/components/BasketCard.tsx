@@ -25,7 +25,6 @@ export function BasketCard({
       case '1W': return basket.returns.w1;
       case '1M': return basket.returns.m1;
       case '1Y': return basket.returns.y1;
-      case 'ALL': return basket.returns.allTime;
     }
   };
 
