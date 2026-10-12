@@ -9,6 +9,7 @@ import { Header } from './Header';
 import { TickerMarquee } from './TickerMarquee';
 import { WalletRoadmapModal } from './WalletRoadmapModal';
 import { BasketComparisonModal } from './BasketComparisonModal';
+import { BasketBuyModal } from './BasketBuyModal';
 import { STOCK_BASKETS } from '../data/baskets';
 import {
   ArrowLeft,
@@ -40,6 +41,7 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
   const [calcAmount, setCalcAmount] = useState<number>(1000);
   const [copiedLink, setCopiedLink] = useState<boolean>(false);
   const [isWalletModalOpen, setIsWalletModalOpen] = useState<boolean>(false);
+  const [isBuyModalOpen, setIsBuyModalOpen] = useState<boolean>(false);
   const [isCompareModalOpen, setIsCompareModalOpen] = useState<boolean>(false);
   const [comparedBasketIds, setComparedBasketIds] = useState<string[]>([]);
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -1128,7 +1130,7 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
             </Link>
 
             <button
-              onClick={() => setIsWalletModalOpen(true)}
+              onClick={() => setIsBuyModalOpen(true)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -1143,7 +1145,7 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
                 border: 'none',
               }}
             >
-              <span>1-Click Buy Simulation</span>
+              <span>1-Click Buy Basket</span>
               <ArrowUpRight size={17} />
             </button>
           </div>
@@ -1151,6 +1153,12 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
       </main>
 
       {/* Modals on Basket Page */}
+      <BasketBuyModal
+        basket={basket}
+        isOpen={isBuyModalOpen}
+        onClose={() => setIsBuyModalOpen(false)}
+      />
+
       <WalletRoadmapModal
         isOpen={isWalletModalOpen}
         onClose={() => setIsWalletModalOpen(false)}

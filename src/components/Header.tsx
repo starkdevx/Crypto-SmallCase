@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Layers, Sparkles, Wallet, ShieldAlert, BarChart3, Sliders, ExternalLink } from 'lucide-react';
+import { WalletUserMenu } from './WalletUserMenu';
 
 interface HeaderProps {
   activeTab: 'baskets' | 'stocks' | 'builder';
@@ -182,24 +183,7 @@ export function Header({
             </button>
           )}
 
-          <button
-            onClick={onOpenWalletInfo}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '8px 18px',
-              borderRadius: '10px',
-              fontSize: '0.84rem',
-              fontWeight: 600,
-              background: 'linear-gradient(135deg, var(--solana-purple) 0%, #7c3aed 100%)',
-              color: '#ffffff',
-              boxShadow: '0 0 15px rgba(153, 69, 255, 0.25)',
-            }}
-          >
-            <Wallet size={16} />
-            <span>Connect Wallet</span>
-          </button>
+          <WalletUserMenu />
         </div>
       </div>
     </header>

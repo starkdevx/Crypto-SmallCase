@@ -1,13 +1,16 @@
 'use client';
 
 import React from 'react';
-import { Sparkles, TrendingUp, ShieldCheck, Zap } from 'lucide-react';
+import { Sparkles, TrendingUp, ShieldCheck, Zap, Wallet, ArrowUpRight } from 'lucide-react';
+import { useSolanaWallet } from '../context/SolanaWalletContext';
 
 interface HeroSectionProps {
   onLearnMore: () => void;
 }
 
 export function HeroSection({ onLearnMore }: HeroSectionProps) {
+  const { connected, walletAddress, setIsWalletModalOpen } = useSolanaWallet();
+
   return (
     <section style={{
       padding: '48px 24px 32px',
@@ -49,8 +52,70 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
             marginBottom: '24px',
             maxWidth: '600px',
           }}>
-            Thematic portfolio investing built for Web3. Buy diversified baskets of tokenized US equities (Nvidia, Apple, SpaceX, Tesla) and crypto rails in 1-click on Solana—powered by real-time onchain NAV and instant liquidity.
+            Thematic portfolio investing built for Web3. Buy diversified baskets of tokenized US equities (Nvidia, Apple, SpaceX, Tesla) and crypto rails in 1-click on Solana—powered by real-time onchain instant liquidity.
           </p>
+
+          {/* Action CTAs */}
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '16px' }}>
+            {!connected ? (
+              <button
+                onClick={() => setIsWalletModalOpen(true)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px 24px',
+                  borderRadius: '12px',
+                  background: 'linear-gradient(135deg, var(--solana-purple) 0%, #7c3aed 100%)',
+                  color: '#ffffff',
+                  fontWeight: 700,
+                  fontSize: '0.92rem',
+                  boxShadow: '0 0 25px rgba(153, 69, 255, 0.35)',
+                  cursor: 'pointer',
+                  border: 'none',
+                }}
+              >
+                <Wallet size={18} />
+                <span>Connect Solana Wallet</span>
+              </button>
+            ) : (
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '10px 18px',
+                borderRadius: '12px',
+                background: 'rgba(20, 241, 149, 0.12)',
+                border: '1px solid rgba(20, 241, 149, 0.3)',
+                color: 'var(--solana-green)',
+                fontWeight: 700,
+                fontSize: '0.88rem',
+              }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--solana-green)' }} />
+                <span>Wallet Connected: {walletAddress?.slice(0, 4)}...{walletAddress?.slice(-4)}</span>
+              </div>
+            )}
+
+            <button
+              onClick={onLearnMore}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '12px 20px',
+                borderRadius: '12px',
+                background: 'rgba(255, 255, 255, 0.05)',
+                color: '#cbd5e1',
+                fontWeight: 600,
+                fontSize: '0.9rem',
+                border: '1px solid var(--border-subtle)',
+                cursor: 'pointer',
+              }}
+            >
+              <span>Onchain Mechanics</span>
+              <ArrowUpRight size={16} />
+            </button>
+          </div>
 
         </div>
 
