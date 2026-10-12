@@ -19,30 +19,6 @@ export function TickerMarquee() {
       fontSize: '0.78rem',
       height: '38px',
     }}>
-      {/* Protocol Oracle Status Badge */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-        padding: '0 16px',
-        background: 'rgba(14, 21, 37, 0.98)',
-        borderRight: '1px solid var(--border-subtle)',
-        whiteSpace: 'nowrap',
-        zIndex: 2,
-        height: '100%',
-      }}>
-        <span style={{
-          width: '7px',
-          height: '7px',
-          borderRadius: '50%',
-          backgroundColor: 'var(--solana-green)',
-          display: 'inline-block',
-          boxShadow: '0 0 8px var(--solana-green)',
-        }} />
-        <span style={{ fontWeight: 700, fontSize: '0.72rem', color: '#e2e8f0', letterSpacing: '0.04em' }}>
-          COINGECKO xSTOCKS ORACLE (100 ASSETS)
-        </span>
-      </div>
 
       {/* Marquee Track */}
       <div style={{

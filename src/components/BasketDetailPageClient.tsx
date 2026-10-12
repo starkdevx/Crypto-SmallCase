@@ -244,10 +244,7 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* Top Oracle Ticker Marquee */}
-      <TickerMarquee />
-
-      {/* Main Navigation Header */}
+      {/* Topbar: Main Navigation Header */}
       <Header
         activeTab="baskets"
         setActiveTab={(tab) => {
@@ -258,6 +255,9 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
         onOpenCompare={() => setIsCompareModalOpen(true)}
         onOpenWalletInfo={() => setIsWalletModalOpen(true)}
       />
+
+      {/* Stocks Pricing Moving Layer (Ticker Marquee) */}
+      <TickerMarquee />
 
       {/* Breadcrumb Navigation Bar */}
       <div style={{
@@ -1100,7 +1100,7 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span style={{ fontWeight: 800, fontSize: '1.05rem', color: '#ffffff' }}>
-                  Stocklana Thematic Index
+                  xCase Thematic Index
                 </span>
                 <CheckCircle2 size={16} color="var(--solana-green)" />
               </div>
@@ -1143,7 +1143,7 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
                 border: 'none',
               }}
             >
-              <span>v1 1-Click Buy Preview</span>
+              <span>1-Click Buy Simulation</span>
               <ArrowUpRight size={17} />
             </button>
           </div>

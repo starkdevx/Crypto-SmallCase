@@ -89,13 +89,13 @@ export function WalletRoadmapModal({ isOpen, onClose }: WalletRoadmapModalProps)
             marginBottom: '10px',
           }}>
             <Wallet size={14} />
-            <span>v1 Roadmap & Interactive Simulation</span>
+            <span>Roadmap & Interactive Simulation</span>
           </div>
           <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '8px' }}>
             Solana Wallet & 1-Click Buy Integration
           </h2>
           <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-            In v0, Stocklana provides portfolio intelligence, constituent breakdowns, and historical % rise metrics. In v1, connect Phantom or Solflare to execute atomic basket purchases.
+            xCase provides portfolio intelligence, constituent breakdowns, and historical % rise metrics. Connect Phantom or Solflare to simulate atomic basket purchases on Solana.
           </p>
         </div>
 
@@ -148,7 +148,7 @@ export function WalletRoadmapModal({ isOpen, onClose }: WalletRoadmapModalProps)
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
             <Zap size={18} color="var(--solana-green)" />
             <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
-              Test-Drive the v1 Buy Flow (Interactive Simulation)
+              Test-Drive the 1-Click Buy Flow (Interactive Simulation)
             </h3>
           </div>
 

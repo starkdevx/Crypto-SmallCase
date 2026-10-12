@@ -92,10 +92,7 @@ export default function HomePage() {
 
   return (
     <main style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* Top Real-time Oracle Ticker Marquee */}
-      <TickerMarquee />
-
-      {/* Main Navigation Header */}
+      {/* Topbar: Main Navigation Header */}
       <Header
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -103,6 +100,9 @@ export default function HomePage() {
         onOpenCompare={() => setIsCompareModalOpen(true)}
         onOpenWalletInfo={() => setIsWalletModalOpen(true)}
       />
+
+      {/* Stocks Pricing Moving Layer (Ticker Marquee) */}
+      <TickerMarquee />
 
       {/* Hero Section */}
       <HeroSection onLearnMore={() => setIsWalletModalOpen(true)} />
@@ -317,9 +317,9 @@ export default function HomePage() {
           color: 'var(--text-secondary)',
         }}>
           <div>
-            <strong style={{ color: '#ffffff' }}>Stocklana (Stonkcase)</strong> • Tokenized Thematic Stock Baskets on Solana
+            <strong style={{ color: '#ffffff' }}>xCase</strong> • Tokenized Thematic Stock Baskets on Solana
             <div style={{ color: 'var(--text-muted)', fontSize: '0.74rem', marginTop: '4px' }}>
-              Built for the Stocklana Hackathon. Powered by CoinGecko xStocks Ecosystem, Pyth Network & PreStocks.
+              Powered by CoinGecko xStocks Ecosystem, Pyth Network & PreStocks.
             </div>
           </div>
 
@@ -337,7 +337,7 @@ export default function HomePage() {
                 fontWeight: 600,
               }}
             >
-              v1 Roadmap
+              Roadmap & Simulation
             </button>
           </div>
         </div>

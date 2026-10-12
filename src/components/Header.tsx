@@ -61,19 +61,19 @@ export function Header({
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}>
-                Stocklana
+                xCase
               </span>
               <span style={{
-                background: 'rgba(153, 69, 255, 0.15)',
-                color: '#c084fc',
+                background: 'rgba(20, 241, 149, 0.12)',
+                color: 'var(--solana-green)',
                 fontSize: '0.68rem',
                 fontWeight: 700,
                 padding: '2px 8px',
                 borderRadius: '6px',
-                border: '1px solid rgba(153, 69, 255, 0.3)',
+                border: '1px solid rgba(20, 241, 149, 0.3)',
                 letterSpacing: '0.04em',
               }}>
-                v0 INFO
+                SOLANA
               </span>
             </div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
@@ -199,15 +199,6 @@ export function Header({
           >
             <Wallet size={16} />
             <span>Connect Wallet</span>
-            <span style={{
-              background: 'rgba(255, 255, 255, 0.2)',
-              fontSize: '0.68rem',
-              padding: '2px 6px',
-              borderRadius: '4px',
-              textTransform: 'uppercase',
-            }}>
-              v1 Preview
-            </span>
           </button>
         </div>
       </div>
