@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Header } from '../components/Header';
 import { TickerMarquee } from '../components/TickerMarquee';
 import { HeroSection } from '../components/HeroSection';
 import { BasketCard } from '../components/BasketCard';
-import { BasketDetailModal } from '../components/BasketDetailModal';
 import { BasketComparisonModal } from '../components/BasketComparisonModal';
 import { BasketBuilderSandbox } from '../components/BasketBuilderSandbox';
 import { StockUniverseTable } from '../components/StockUniverseTable';
@@ -15,6 +15,7 @@ import { Basket, BasketCategory, Timeframe } from '../types/basket';
 import { Search, Filter, Sparkles, Layers, SlidersHorizontal, Check } from 'lucide-react';
 
 export default function HomePage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<'baskets' | 'stocks' | 'builder'>('baskets');
   const [selectedCategory, setSelectedCategory] = useState<BasketCategory>('All');
   const [selectedTimeframe, setSelectedTimeframe] = useState<Timeframe>('1Y');
@@ -22,10 +23,13 @@ export default function HomePage() {
   const [sortBy, setSortBy] = useState<'return' | 'nav' | 'risk'>('return');
 
   // Modals state
-  const [activeDetailBasket, setActiveDetailBasket] = useState<Basket | null>(null);
   const [comparedBasketIds, setComparedBasketIds] = useState<string[]>([]);
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
+
+  const handleSelectBasket = (basket: Basket) => {
+    router.push(`/basket/${basket.slug || basket.id}`);
+  };
 
   // Toggle basket comparison
   const handleToggleCompare = (basket: Basket) => {
@@ -258,7 +262,7 @@ export default function HomePage() {
                   key={basket.id}
                   basket={basket}
                   selectedTimeframe={selectedTimeframe}
-                  onSelect={(b) => setActiveDetailBasket(b)}
+                  onSelect={handleSelectBasket}
                   isCompared={comparedBasketIds.includes(basket.id)}
                   onToggleCompare={handleToggleCompare}
                 />
@@ -271,9 +275,7 @@ export default function HomePage() {
       {/* Tab: Stock Universe */}
       {activeTab === 'stocks' && (
         <StockUniverseTable
-          onSelectBasket={(b) => {
-            setActiveDetailBasket(b);
-          }}
+          onSelectBasket={handleSelectBasket}
         />
       )}
 
@@ -281,19 +283,13 @@ export default function HomePage() {
       {activeTab === 'builder' && <BasketBuilderSandbox />}
 
       {/* Modals */}
-      <BasketDetailModal
-        basket={activeDetailBasket}
-        onClose={() => setActiveDetailBasket(null)}
-        onOpenWalletPreview={() => setIsWalletModalOpen(true)}
-      />
-
       <BasketComparisonModal
         comparedBaskets={comparedBaskets}
         onClose={() => setIsCompareModalOpen(false)}
         onRemoveBasket={(id) => setComparedBasketIds((prev) => prev.filter((i) => i !== id))}
         onSelectBasket={(b) => {
           setIsCompareModalOpen(false);
-          setActiveDetailBasket(b);
+          handleSelectBasket(b);
         }}
       />
 

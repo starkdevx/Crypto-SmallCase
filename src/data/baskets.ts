@@ -607,3 +607,8 @@ export const STOCK_BASKETS: Basket[] = [
     isFeatured: true,
   },
 ];
+
+export function getBasket(idOrSlug: string): Basket | undefined {
+  return STOCK_BASKETS.find((b) => b.id === idOrSlug || b.slug === idOrSlug);
+}
+
