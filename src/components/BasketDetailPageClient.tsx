@@ -18,7 +18,6 @@ import {
   Calculator,
   ExternalLink,
   Info,
-  CheckCircle2,
   Activity,
   Layers,
   Sparkles,
@@ -335,59 +334,85 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
       </div>
 
       {/* Main Basket Detail Page Content */}
-      <main style={{ maxWidth: '1280px', width: '100%', margin: '0 auto', padding: '24px 24px 80px' }}>
+      <main style={{ maxWidth: '1280px', width: '100%', margin: '0 auto', padding: '24px 24px 20px', flex: 1 }}>
         {/* Hero Header Section */}
         <div className="glass-panel" style={{ padding: '36px', borderRadius: '24px', marginBottom: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px', flexWrap: 'wrap' }}>
-            <span style={{
-              fontSize: '0.76rem',
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              padding: '4px 12px',
-              borderRadius: '6px',
-              background: 'rgba(153, 69, 255, 0.15)',
-              color: '#c084fc',
-              border: '1px solid rgba(153, 69, 255, 0.3)',
-            }}>
-              {basket.category}
-            </span>
+          <div style={{
+            display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '24px',
+            marginBottom: '24px',
+          }}>
+            <div style={{ maxWidth: '820px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px', flexWrap: 'wrap' }}>
+                <span style={{
+                  fontSize: '0.76rem',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  padding: '4px 12px',
+                  borderRadius: '6px',
+                  background: 'rgba(153, 69, 255, 0.15)',
+                  color: '#c084fc',
+                  border: '1px solid rgba(153, 69, 255, 0.3)',
+                }}>
+                  {basket.category}
+                </span>
 
-            <span style={{
-              fontSize: '0.76rem',
-              fontWeight: 700,
-              padding: '4px 12px',
-              borderRadius: '6px',
-              background: 'rgba(20, 241, 149, 0.12)',
-              color: 'var(--solana-green)',
-              border: '1px solid rgba(20, 241, 149, 0.25)',
-            }}>
-              {basket.riskTier} Volatility
-            </span>
+                <span style={{
+                  fontSize: '0.76rem',
+                  fontWeight: 700,
+                  padding: '4px 12px',
+                  borderRadius: '6px',
+                  background: 'rgba(20, 241, 149, 0.12)',
+                  color: 'var(--solana-green)',
+                  border: '1px solid rgba(20, 241, 149, 0.25)',
+                }}>
+                  {basket.riskTier} Volatility
+                </span>
 
-            <span style={{
-              fontSize: '0.76rem',
-              color: 'var(--solana-cyan)',
-              background: 'rgba(0, 229, 255, 0.1)',
-              padding: '4px 10px',
-              borderRadius: '6px',
-              border: '1px solid rgba(0, 229, 255, 0.25)',
-              fontWeight: 600,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-            }}>
-              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--solana-green)' }} />
-              Live CoinGecko 24h Cached
-            </span>
+                
+              </div>
+
+              <h1 style={{ fontSize: '2.4rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '10px' }}>
+                {basket.title}
+              </h1>
+
+              <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+                {basket.description}
+              </p>
+            </div>
+
+            {/* Clearly Visible Top 1-Click Buy Action */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px' }}>
+              <button
+                onClick={() => setIsBuyModalOpen(true)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  padding: '16px 32px',
+                  borderRadius: '16px',
+                  background: 'linear-gradient(135deg, var(--solana-green) 0%, #059669 100%)',
+                  color: '#07090e',
+                  fontWeight: 800,
+                  fontSize: '1.05rem',
+                  cursor: 'pointer',
+                  border: 'none',
+                  boxShadow: '0 0 30px rgba(20, 241, 149, 0.35)',
+                  transition: 'all 0.2s ease',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <span>1-Click Buy Basket</span>
+                <ArrowUpRight size={20} strokeWidth={2.5} />
+              </button>
+              <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>
+                Min ${basket.minInvestmentUsdc} USDC • Instant Solana Execution
+              </span>
+            </div>
           </div>
-
-          <h1 style={{ fontSize: '2.4rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '10px' }}>
-            {basket.title}
-          </h1>
-
-          <p style={{ fontSize: '1.08rem', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '900px', marginBottom: '28px' }}>
-            {basket.description}
-          </p>
 
           {/* Key Metrics Snapshot Grid */}
           <div style={{
@@ -871,34 +896,54 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
           </div>
         </div>
 
-        {/* Investment Return Simulator */}
+        {/* Concise Historical Investment Calculator */}
         <div style={{
-          marginBottom: '28px',
-          padding: '24px',
-          borderRadius: '24px',
-          background: 'linear-gradient(135deg, rgba(20, 241, 149, 0.04) 0%, rgba(153, 69, 255, 0.04) 100%)',
-          border: '1px solid rgba(20, 241, 149, 0.2)',
+          marginBottom: '24px',
+          padding: '16px 22px',
+          borderRadius: '16px',
+          background: 'rgba(16, 22, 35, 0.75)',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid var(--border-subtle)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '16px',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-            <Calculator size={20} color="var(--solana-green)" />
-            <h2 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#ffffff' }}>
-              Historical Investment Calculator
-            </h2>
-          </div>
+          {/* Label & Amount controls */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Calculator size={18} color="var(--solana-green)" />
+              <span style={{ fontSize: '0.88rem', fontWeight: 700, color: '#ffffff' }}>
+                Simulate Returns:
+              </span>
+            </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '24px',
-            alignItems: 'center',
-          }}>
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Investment Amount</span>
-                <span className="num-mono" style={{ fontSize: '1rem', fontWeight: 700, color: '#ffffff' }}>
-                  ${calcAmount.toLocaleString()} USDC
-                </span>
-              </div>
+            {/* Quick amount chips */}
+            <div style={{ display: 'flex', gap: '6px' }}>
+              {[250, 500, 1000, 2500, 5000].map((amt) => (
+                <button
+                  key={amt}
+                  onClick={() => setCalcAmount(amt)}
+                  style={{
+                    padding: '4px 10px',
+                    borderRadius: '8px',
+                    fontSize: '0.78rem',
+                    fontWeight: 700,
+                    background: calcAmount === amt ? 'rgba(20, 241, 149, 0.2)' : 'rgba(255, 255, 255, 0.04)',
+                    color: calcAmount === amt ? 'var(--solana-green)' : 'var(--text-secondary)',
+                    border: calcAmount === amt ? '1px solid var(--solana-green)' : '1px solid var(--border-subtle)',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease',
+                  }}
+                >
+                  ${amt >= 1000 ? `${amt / 1000}k` : amt}
+                </button>
+              ))}
+            </div>
+
+            {/* Compact Slider & amount display */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <input
                 type="range"
                 min="50"
@@ -907,45 +952,33 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
                 value={calcAmount}
                 onChange={(e) => setCalcAmount(Number(e.target.value))}
                 style={{
-                  width: '100%',
+                  width: '100px',
                   accentColor: 'var(--solana-green)',
                   cursor: 'pointer',
                 }}
               />
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                <span>$50</span>
-                <span>$2,500</span>
-                <span>$5,000</span>
-                <span>$10,000</span>
-              </div>
+              <span className="num-mono" style={{ fontSize: '0.86rem', fontWeight: 700, color: '#ffffff' }}>
+                ${calcAmount.toLocaleString()} USDC
+              </span>
             </div>
+          </div>
 
-            <div style={{
-              background: 'rgba(0, 0, 0, 0.35)',
-              padding: '18px 22px',
-              borderRadius: '16px',
-              border: '1px solid var(--border-subtle)',
-            }}>
-              <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                Simulated Value based on real {timeframe} performance ({currentPeriodReturn >= 0 ? '+' : ''}{currentPeriodReturn}%):
-              </div>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginTop: '6px' }}>
-                <span className="num-mono" style={{ fontSize: '1.65rem', fontWeight: 800, color: '#ffffff' }}>
-                  ${calculatedFutureValue.toFixed(2)} USDC
-                </span>
-                <span className={`num-mono ${profitLoss >= 0 ? 'color-gain' : 'color-loss'}`} style={{ fontSize: '0.94rem', fontWeight: 700 }}>
-                  ({profitLoss >= 0 ? '+' : ''}${profitLoss.toFixed(2)})
-                </span>
-              </div>
-              <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '8px' }}>
-                *Past simulation based on CoinGecko historical oracle data does not guarantee future results.
-              </div>
-            </div>
+          {/* Outcome Value */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+              Est. {timeframe} Outcome:
+            </span>
+            <span className="num-mono" style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff' }}>
+              ${calculatedFutureValue.toFixed(2)} USDC
+            </span>
+            <span className={`num-mono ${profitLoss >= 0 ? 'badge-gain' : 'badge-loss'}`} style={{ fontSize: '0.78rem', padding: '3px 8px' }}>
+              {profitLoss >= 0 ? '+' : ''}${profitLoss.toFixed(2)} ({currentPeriodReturn >= 0 ? '+' : ''}{currentPeriodReturn}%)
+            </span>
           </div>
         </div>
 
         {/* Detailed Constituents Table with Real Tokenized xStocks Data */}
-        <div className="glass-panel" style={{ padding: '28px', borderRadius: '24px', marginBottom: '28px' }}>
+        <div className="glass-panel" style={{ padding: '28px', borderRadius: '24px', marginBottom: '0' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', flexWrap: 'wrap', gap: '10px' }}>
             <div>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff' }}>
@@ -1067,84 +1100,31 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
           </div>
         </div>
 
-        {/* Curator Profile & 1-Click Buy Action Banner */}
+      </main>
+
+      {/* Footer */}
+      <footer style={{
+        marginTop: 'auto',
+        borderTop: '1px solid var(--border-subtle)',
+        background: 'rgba(6, 9, 14, 0.95)',
+        padding: '16px 24px',
+      }}>
         <div style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
           display: 'flex',
-          alignItems: 'center',
           justifyContent: 'space-between',
+          alignItems: 'center',
           flexWrap: 'wrap',
-          gap: '20px',
-          padding: '24px 32px',
-          borderRadius: '20px',
-          background: 'rgba(18, 25, 40, 0.9)',
-          border: '1px solid var(--border-subtle)',
+          gap: '12px',
+          fontSize: '0.82rem',
+          color: 'var(--text-secondary)',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <div style={{
-              width: '46px',
-              height: '46px',
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, rgba(153, 69, 255, 0.25), rgba(20, 241, 149, 0.25))',
-              border: '1px solid rgba(20, 241, 149, 0.3)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'var(--solana-green)',
-            }}>
-              <Sparkles size={22} />
-            </div>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ fontWeight: 800, fontSize: '1.05rem', color: '#ffffff' }}>
-                  xCase Thematic Index
-                </span>
-                <CheckCircle2 size={16} color="var(--solana-green)" />
-              </div>
-              <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                {basket.constituents.length} tokenized assets • Rebalanced {basket.rebalanceFrequency} • Min ${basket.minInvestmentUsdc} USDC
-              </div>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Link
-              href="/"
-              style={{
-                padding: '12px 20px',
-                borderRadius: '12px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                color: '#ffffff',
-                fontWeight: 700,
-                fontSize: '0.88rem',
-                textDecoration: 'none',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-              }}
-            >
-              Browse Other Baskets
-            </Link>
-
-            <button
-              onClick={() => setIsBuyModalOpen(true)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '12px 24px',
-                borderRadius: '12px',
-                background: 'linear-gradient(135deg, var(--solana-green) 0%, #059669 100%)',
-                color: '#07090e',
-                fontWeight: 800,
-                fontSize: '0.9rem',
-                cursor: 'pointer',
-                border: 'none',
-              }}
-            >
-              <span>1-Click Buy Basket</span>
-              <ArrowUpRight size={17} />
-            </button>
+          <div>
+            <strong style={{ color: '#ffffff' }}>xCase</strong> • SmallCase for Crypto on Solana
           </div>
         </div>
-      </main>
+      </footer>
 
       {/* Modals on Basket Page */}
       <BasketBuyModal

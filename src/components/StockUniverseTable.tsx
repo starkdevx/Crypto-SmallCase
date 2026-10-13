@@ -68,7 +68,7 @@ export function StockUniverseTable({ onSelectBasket }: StockUniverseTableProps) 
   };
 
   return (
-    <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '24px 24px 64px' }}>
+    <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '24px 24px 20px' }}>
       {/* Sector filter pills */}
       <div style={{
         display: 'flex',

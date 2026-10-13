@@ -79,7 +79,7 @@ export function BasketBuilderSandbox() {
   );
 
   return (
-    <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '16px 24px 64px' }}>
+    <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '16px 24px 20px' }}>
       {/* Intro Heading */}
       <div style={{ marginBottom: '28px' }}>
         <div style={{

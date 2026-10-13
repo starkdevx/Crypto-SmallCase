@@ -84,7 +84,7 @@ export default function BasketsPage() {
       <TickerMarquee />
 
       {/* Main Baskets Section */}
-      <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '24px 24px 64px', width: '100%' }}>
+      <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '24px 24px 20px', width: '100%' }}>
         {/* Controls Bar: Timeframe, Search, Sort */}
         <div style={{
           background: 'rgba(16, 22, 35, 0.7)',
@@ -226,7 +226,7 @@ export default function BasketsPage() {
         marginTop: 'auto',
         borderTop: '1px solid var(--border-subtle)',
         background: 'rgba(6, 9, 14, 0.95)',
-        padding: '36px 24px',
+        padding: '16px 24px',
       }}>
         <div style={{
           maxWidth: '1280px',
@@ -235,20 +235,12 @@ export default function BasketsPage() {
           justifyContent: 'space-between',
           alignItems: 'center',
           flexWrap: 'wrap',
-          gap: '20px',
+          gap: '12px',
           fontSize: '0.82rem',
           color: 'var(--text-secondary)',
         }}>
           <div>
             <strong style={{ color: '#ffffff' }}>xCase</strong> • SmallCase for Crypto on Solana
-            <div style={{ color: 'var(--text-muted)', fontSize: '0.74rem', marginTop: '4px' }}>
-              Powered by CoinGecko xStocks Ecosystem, Pyth Network & PreStocks.
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-            <span style={{ color: 'var(--solana-green)', fontWeight: 600 }}>● 100 Tokenized xStocks Live</span>
-            <span>Solana Devnet Ready</span>
           </div>
         </div>
       </footer>

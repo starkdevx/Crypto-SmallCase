@@ -30,7 +30,7 @@ export default function HomePage() {
       <HeroSection onLearnMore={() => setIsWalletModalOpen(true)} />
 
       {/* Quick Pillars / Value Props Navigation */}
-      <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px 64px', width: '100%' }}>
+      <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px 20px', width: '100%' }}>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -163,7 +163,7 @@ export default function HomePage() {
         marginTop: 'auto',
         borderTop: '1px solid var(--border-subtle)',
         background: 'rgba(6, 9, 14, 0.95)',
-        padding: '36px 24px',
+        padding: '16px 24px',
       }}>
         <div style={{
           maxWidth: '1280px',
@@ -172,20 +172,12 @@ export default function HomePage() {
           justifyContent: 'space-between',
           alignItems: 'center',
           flexWrap: 'wrap',
-          gap: '20px',
+          gap: '12px',
           fontSize: '0.82rem',
           color: 'var(--text-secondary)',
         }}>
           <div>
             <strong style={{ color: '#ffffff' }}>xCase</strong> • SmallCase for Crypto on Solana
-            <div style={{ color: 'var(--text-muted)', fontSize: '0.74rem', marginTop: '4px' }}>
-              Powered by CoinGecko xStocks Ecosystem, Pyth Network & PreStocks.
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-            <span style={{ color: 'var(--solana-green)', fontWeight: 600 }}>● 100 Tokenized xStocks Live</span>
-            <span>Solana Devnet Ready</span>
           </div>
         </div>
       </footer>
