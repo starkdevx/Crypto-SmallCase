@@ -248,14 +248,8 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       {/* Topbar: Main Navigation Header */}
       <Header
-        activeTab="baskets"
-        setActiveTab={(tab) => {
-          if (tab === 'baskets') router.push('/');
-          else router.push(`/?tab=${tab}`);
-        }}
         compareCount={comparedBasketIds.length}
         onOpenCompare={() => setIsCompareModalOpen(true)}
-        onOpenWalletInfo={() => setIsWalletModalOpen(true)}
       />
 
       {/* Stocks Pricing Moving Layer (Ticker Marquee) */}
@@ -275,7 +269,7 @@ export function BasketDetailPageClient({ basket }: BasketDetailPageClientProps) 
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.84rem' }}>
           <Link
-            href="/"
+            href="/baskets"
             style={{
               color: 'var(--text-secondary)',
               display: 'inline-flex',

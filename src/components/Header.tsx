@@ -1,56 +1,92 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Layers, Sparkles, Wallet, ShieldAlert, BarChart3, Sliders, ExternalLink } from 'lucide-react';
+import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Layers, Sparkles, BarChart3, Sliders, Home } from 'lucide-react';
 import { WalletUserMenu } from './WalletUserMenu';
 
 interface HeaderProps {
-  activeTab: 'baskets' | 'stocks' | 'builder';
-  setActiveTab: (tab: 'baskets' | 'stocks' | 'builder') => void;
-  compareCount: number;
-  onOpenCompare: () => void;
-  onOpenWalletInfo: () => void;
+  activeTab?: string;
+  setActiveTab?: (tab: any) => void;
+  compareCount?: number;
+  onOpenCompare?: () => void;
+  onOpenWalletInfo?: () => void;
 }
 
 export function Header({
   activeTab,
   setActiveTab,
-  compareCount,
+  compareCount = 0,
   onOpenCompare,
   onOpenWalletInfo,
 }: HeaderProps) {
+  const pathname = usePathname() || '/';
+
+  // Automatically determine active tab from URL path
+  const currentTab = (() => {
+    if (activeTab) return activeTab;
+    if (pathname.startsWith('/baskets') || pathname.startsWith('/basket/')) return 'baskets';
+    if (pathname.startsWith('/stocks')) return 'stocks';
+    if (pathname.startsWith('/builder')) return 'builder';
+    if (pathname === '/') return 'home';
+    return '';
+  })();
+
+  const getTabStyle = (tabKey: string) => {
+    const isActive = currentTab === tabKey;
+    return {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px',
+      padding: '8px 16px',
+      borderRadius: '8px',
+      fontSize: '0.86rem',
+      fontWeight: 600,
+      color: isActive ? '#ffffff' : 'var(--text-secondary)',
+      background: isActive
+        ? 'linear-gradient(135deg, rgba(153, 69, 255, 0.3), rgba(20, 241, 149, 0.2))'
+        : 'transparent',
+      border: isActive ? '1px solid rgba(153, 69, 255, 0.4)' : '1px solid transparent',
+      textDecoration: 'none',
+      transition: 'all 0.15s ease',
+      cursor: 'pointer',
+    };
+  };
+
   return (
     <header style={{
       position: 'sticky',
       top: 0,
       zIndex: 50,
-      background: 'rgba(7, 9, 14, 0.85)',
+      background: 'rgba(7, 9, 14, 0.88)',
       backdropFilter: 'blur(16px)',
       borderBottom: '1px solid var(--border-subtle)',
     }}>
       <div style={{
         maxWidth: '1280px',
         margin: '0 auto',
-        padding: '14px 24px',
+        padding: '12px 24px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
         gap: '16px',
       }}>
-        {/* Brand Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        {/* Brand Logo - Links to Home */}
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '14px', textDecoration: 'none' }}>
           <div style={{
-            width: '42px',
-            height: '42px',
+            width: '40px',
+            height: '40px',
             borderRadius: '12px',
             background: 'linear-gradient(135deg, var(--solana-purple) 0%, var(--solana-green) 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             boxShadow: '0 0 20px rgba(153, 69, 255, 0.35)',
+            flexShrink: 0,
           }}>
-            <Layers size={24} color="#ffffff" />
+            <Layers size={22} color="#ffffff" />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -77,11 +113,11 @@ export function Header({
                 SOLANA
               </span>
             </div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+            <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
               SmallCase for Crypto
             </div>
           </div>
-        </div>
+        </Link>
 
         {/* Navigation Tabs */}
         <nav style={{
@@ -93,67 +129,30 @@ export function Header({
           border: '1px solid var(--border-subtle)',
           gap: '4px',
         }}>
-          <button
-            onClick={() => setActiveTab('baskets')}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '8px 16px',
-              borderRadius: '8px',
-              fontSize: '0.86rem',
-              fontWeight: 600,
-              color: activeTab === 'baskets' ? '#ffffff' : 'var(--text-secondary)',
-              background: activeTab === 'baskets' ? 'linear-gradient(135deg, rgba(153, 69, 255, 0.3), rgba(20, 241, 149, 0.2))' : 'transparent',
-              border: activeTab === 'baskets' ? '1px solid rgba(153, 69, 255, 0.4)' : '1px solid transparent',
-            }}
-          >
-            <Layers size={16} />
-            Explore Baskets
-          </button>
+          <Link href="/" style={getTabStyle('home')}>
+            <Home size={15} />
+            <span>Home</span>
+          </Link>
 
-          <button
-            onClick={() => setActiveTab('stocks')}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '8px 16px',
-              borderRadius: '8px',
-              fontSize: '0.86rem',
-              fontWeight: 600,
-              color: activeTab === 'stocks' ? '#ffffff' : 'var(--text-secondary)',
-              background: activeTab === 'stocks' ? 'linear-gradient(135deg, rgba(153, 69, 255, 0.3), rgba(20, 241, 149, 0.2))' : 'transparent',
-              border: activeTab === 'stocks' ? '1px solid rgba(153, 69, 255, 0.4)' : '1px solid transparent',
-            }}
-          >
-            <BarChart3 size={16} />
-            Stock Universe
-          </button>
+          <Link href="/baskets" style={getTabStyle('baskets')}>
+            <Layers size={15} />
+            <span>Explore Baskets</span>
+          </Link>
 
-          <button
-            onClick={() => setActiveTab('builder')}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '8px 16px',
-              borderRadius: '8px',
-              fontSize: '0.86rem',
-              fontWeight: 600,
-              color: activeTab === 'builder' ? '#ffffff' : 'var(--text-secondary)',
-              background: activeTab === 'builder' ? 'linear-gradient(135deg, rgba(153, 69, 255, 0.3), rgba(20, 241, 149, 0.2))' : 'transparent',
-              border: activeTab === 'builder' ? '1px solid rgba(153, 69, 255, 0.4)' : '1px solid transparent',
-            }}
-          >
-            <Sliders size={16} />
-            Basket Builder
-          </button>
+          <Link href="/stocks" style={getTabStyle('stocks')}>
+            <BarChart3 size={15} />
+            <span>Stock Universe</span>
+          </Link>
+
+          <Link href="/builder" style={getTabStyle('builder')}>
+            <Sliders size={15} />
+            <span>Basket Builder</span>
+          </Link>
         </nav>
 
-        {/* Actions: Compare & Wallet Modal Trigger */}
+        {/* Actions: Compare & Wallet */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          {compareCount > 0 && (
+          {compareCount > 0 && onOpenCompare && (
             <button
               onClick={onOpenCompare}
               style={{
@@ -167,6 +166,7 @@ export function Header({
                 background: 'rgba(20, 241, 149, 0.15)',
                 color: 'var(--solana-green)',
                 border: '1px solid rgba(20, 241, 149, 0.35)',
+                cursor: 'pointer',
               }}
             >
               <span>Compare</span>

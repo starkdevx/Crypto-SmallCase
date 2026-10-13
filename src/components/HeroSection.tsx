@@ -1,15 +1,12 @@
-'use client';
-
 import React from 'react';
-import { Sparkles, TrendingUp, ShieldCheck, Zap, Wallet, ArrowUpRight } from 'lucide-react';
-import { useSolanaWallet } from '../context/SolanaWalletContext';
+import Link from 'next/link';
+import { Sparkles, TrendingUp, ShieldCheck, Zap, ArrowRight, Layers, BarChart3 } from 'lucide-react';
 
 interface HeroSectionProps {
-  onLearnMore: () => void;
+  onLearnMore?: () => void;
 }
 
 export function HeroSection({ onLearnMore }: HeroSectionProps) {
-  const { connected, walletAddress, setIsWalletModalOpen } = useSolanaWallet();
 
   return (
     <section style={{
@@ -57,64 +54,48 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
 
           {/* Action CTAs */}
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '16px' }}>
-            {!connected ? (
-              <button
-                onClick={() => setIsWalletModalOpen(true)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '12px 24px',
-                  borderRadius: '12px',
-                  background: 'linear-gradient(135deg, var(--solana-purple) 0%, #7c3aed 100%)',
-                  color: '#ffffff',
-                  fontWeight: 700,
-                  fontSize: '0.92rem',
-                  boxShadow: '0 0 25px rgba(153, 69, 255, 0.35)',
-                  cursor: 'pointer',
-                  border: 'none',
-                }}
-              >
-                <Wallet size={18} />
-                <span>Connect Solana Wallet</span>
-              </button>
-            ) : (
-              <div style={{
+            <Link
+              href="/baskets"
+              style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                padding: '10px 18px',
+                padding: '13px 24px',
                 borderRadius: '12px',
-                background: 'rgba(20, 241, 149, 0.12)',
-                border: '1px solid rgba(20, 241, 149, 0.3)',
-                color: 'var(--solana-green)',
-                fontWeight: 700,
-                fontSize: '0.88rem',
-              }}>
-                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--solana-green)' }} />
-                <span>Wallet Connected: {walletAddress?.slice(0, 4)}...{walletAddress?.slice(-4)}</span>
-              </div>
-            )}
-
-            <button
-              onClick={onLearnMore}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '12px 20px',
-                borderRadius: '12px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                color: '#cbd5e1',
-                fontWeight: 600,
-                fontSize: '0.9rem',
-                border: '1px solid var(--border-subtle)',
-                cursor: 'pointer',
+                background: 'linear-gradient(135deg, var(--solana-green) 0%, #059669 100%)',
+                color: '#07090e',
+                fontWeight: 800,
+                fontSize: '0.94rem',
+                textDecoration: 'none',
+                boxShadow: '0 0 25px rgba(20, 241, 149, 0.3)',
+                transition: 'all 0.2s ease',
               }}
             >
-              <span>Onchain Mechanics</span>
-              <ArrowUpRight size={16} />
-            </button>
+              <Layers size={18} />
+              <span>Explore Baskets</span>
+              <ArrowRight size={16} />
+            </Link>
+
+            <Link
+              href="/stocks"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 20px',
+                borderRadius: '12px',
+                background: 'rgba(0, 229, 255, 0.1)',
+                border: '1px solid rgba(0, 229, 255, 0.35)',
+                color: 'var(--solana-cyan)',
+                fontWeight: 700,
+                fontSize: '0.9rem',
+                textDecoration: 'none',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              <BarChart3 size={17} />
+              <span>Tokenized Stocks</span>
+            </Link>
           </div>
 
         </div>

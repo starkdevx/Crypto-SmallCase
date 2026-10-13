@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { ALL_XSTOCKS } from '../data/stocks';
 import { STOCK_BASKETS } from '../data/baskets';
 import { Stock, Basket } from '../types/basket';
-import { Search, ArrowUpRight, ArrowDownRight, Layers, SlidersHorizontal, Sparkles } from 'lucide-react';
+import { Search, ArrowUpRight, ArrowDownRight, Layers, SlidersHorizontal } from 'lucide-react';
 
 interface StockUniverseTableProps {
   onSelectBasket: (basket: Basket) => void;
@@ -68,33 +68,7 @@ export function StockUniverseTable({ onSelectBasket }: StockUniverseTableProps) 
   };
 
   return (
-    <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '16px 24px 64px' }}>
-      {/* Header */}
-      <div style={{ marginBottom: '28px' }}>
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '4px 12px',
-          borderRadius: '999px',
-          background: 'rgba(0, 229, 255, 0.1)',
-          border: '1px solid rgba(0, 229, 255, 0.3)',
-          color: 'var(--solana-cyan)',
-          fontSize: '0.78rem',
-          fontWeight: 700,
-          marginBottom: '10px',
-        }}>
-          <Sparkles size={14} />
-          <span>CoinGecko xStocks Ecosystem (100 Live Tokenized Stocks)</span>
-        </div>
-        <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '8px' }}>
-          Tokenized Stock Universe & Oracle Feeds
-        </h2>
-        <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', maxWidth: '780px' }}>
-          Explore the full ecosystem of 100 tokenized equities traded onchain. View live prices, 24h volumes, market capitalizations, and underlying basket memberships.
-        </p>
-      </div>
-
+    <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '24px 24px 64px' }}>
       {/* Sector filter pills */}
       <div style={{
         display: 'flex',
